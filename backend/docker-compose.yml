@@ -2,10 +2,10 @@ version: "3.9"
 
 services:
   database:
-    image: postgres:12
+    image: postgres:16
     container_name: sooperdoopershop
     ports:
-      - "3307:3306"
+      - "5432:5432"
     volumes:
       - ./:/app/
     environment:
@@ -14,6 +14,18 @@ services:
       POSTGRES_DB: postgres
     networks:
       - internal
+
+  pg_admin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin4
+    ports:
+      - "15432:80"
+    environment:
+      - GUNICORN_THREADS=1
+      - PGADMIN_DEFAULT_EMAIL=my_awesome_email@email.com
+      - PGADMIN_DEFAULT_PASSWORD=does_not_matter
+    depends_on:
+      - database
 
   rabbitmq-container:
     image: rabbitmq:3.11-management

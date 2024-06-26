@@ -1,8 +1,8 @@
-package com.example.demo.auth.repository;
+package com.example.demo.core.domain.service.interfaces;
 
 import java.util.Optional;
 
-import com.example.demo.auth.models.User;
+import com.example.demo.core.domain.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

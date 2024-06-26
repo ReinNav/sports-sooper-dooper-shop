@@ -1,8 +1,9 @@
-package com.example.demo.auth.models;
+package com.example.demo.core.domain.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
+import com.example.demo.core.domain.model.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

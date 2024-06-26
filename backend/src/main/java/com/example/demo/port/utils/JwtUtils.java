@@ -1,9 +1,9 @@
-package com.example.demo.auth.jwt;
+package com.example.demo.port.utils;
 
 import java.security.Key;
 import java.util.Date;
 
-import com.example.demo.auth.services.UserDetailsImpl;
+import com.example.demo.core.domain.service.impl.UserDetailsImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

@@ -4,7 +4,6 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  SET_MESSAGE,
 } from "./AuthStatus";
 
 import AuthService from "../services/AuthService";

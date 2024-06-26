@@ -1,10 +1,10 @@
-package com.example.demo.auth.services;
+package com.example.demo.core.domain.service.impl;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import com.example.demo.auth.models.User;
+import com.example.demo.core.domain.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

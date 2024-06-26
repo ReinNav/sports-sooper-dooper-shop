@@ -1,8 +1,8 @@
-package com.example.demo.auth.jwt;
+package com.example.demo.port.utils;
 
 import java.io.IOException;
 
-import com.example.demo.auth.services.UserDetailsServiceImpl;
+import com.example.demo.core.domain.service.impl.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

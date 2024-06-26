@@ -1,9 +1,9 @@
-package com.example.demo.auth.repository;
+package com.example.demo.core.domain.service.interfaces;
 
 import java.util.Optional;
 
-import com.example.demo.auth.models.ERole;
-import com.example.demo.auth.models.Role;
+import com.example.demo.core.domain.model.ERole;
+import com.example.demo.core.domain.model.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

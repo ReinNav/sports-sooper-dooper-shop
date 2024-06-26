@@ -15,18 +15,6 @@ services:
     networks:
       - internal
 
-  pg_admin:
-    image: dpage/pgadmin4:latest
-    container_name: pgadmin4
-    ports:
-      - "15432:80"
-    environment:
-      - GUNICORN_THREADS=1
-      - PGADMIN_DEFAULT_EMAIL=my_awesome_email@email.com
-      - PGADMIN_DEFAULT_PASSWORD=does_not_matter
-    depends_on:
-      - database
-
   rabbitmq-container:
     image: rabbitmq:3.11-management
     hostname: rabbitmq-container

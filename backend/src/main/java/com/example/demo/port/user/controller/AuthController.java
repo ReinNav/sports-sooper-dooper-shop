@@ -1,17 +1,15 @@
-package com.example.demo.auth.controllers;
+package com.example.demo.port.user.controller;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import com.example.demo.auth.jwt.JwtUtils;
-import com.example.demo.auth.models.ERole;
-import com.example.demo.auth.models.Role;
-import com.example.demo.auth.models.User;
-import com.example.demo.auth.repository.RoleRepository;
-import com.example.demo.auth.repository.UserRepository;
-import com.example.demo.auth.services.UserDetailsImpl;
+import com.example.demo.port.utils.JwtUtils;
+import com.example.demo.core.domain.model.ERole;
+import com.example.demo.core.domain.model.Role;
+import com.example.demo.core.domain.model.User;
+import com.example.demo.core.domain.service.interfaces.RoleRepository;
+import com.example.demo.core.domain.service.interfaces.UserRepository;
+import com.example.demo.core.domain.service.impl.UserDetailsImpl;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 

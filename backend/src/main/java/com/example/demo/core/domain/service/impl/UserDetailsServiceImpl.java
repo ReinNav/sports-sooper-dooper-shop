@@ -1,7 +1,8 @@
-package com.example.demo.auth.services;
+package com.example.demo.core.domain.service.impl;
 
-import com.example.demo.auth.models.User;
-import com.example.demo.auth.repository.UserRepository;
+import com.example.demo.core.domain.model.User;
+import com.example.demo.core.domain.service.impl.UserDetailsImpl;
+import com.example.demo.core.domain.service.interfaces.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

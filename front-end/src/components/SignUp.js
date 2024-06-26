@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { signup } from '../actions/Auth';
+import { signup, login } from '../actions/Auth';
 import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
@@ -16,13 +16,14 @@ const SignUp = () => {
         event.preventDefault();
         setLoading(true);
 
-        dispatch(signup(username, password))
+        dispatch(signup(username, email, password))
             .then(() => {
+                dispatch(login(username, password))
               navigate('/');
             })
-            .catch(() => {
+            .catch((message) => {
               setLoading(false);
-              setError();
+              setError(message);
             });
     };
 

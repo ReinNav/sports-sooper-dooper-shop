@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  database:
+    image: postgres:16
+    container_name: postgres
+    volumes:
+      - ./:/app/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    network_mode: "service:localhost"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:25.0
+    container_name: keycloak
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    command: start-dev
+    network_mode: "service:localhost"
+
+  localhost:
+    image: alpine:latest
+    command: sleep infinity
+    ports:
+      - "8080:8080" # Keycloak port
+      - "1234:1234" # app port
+      - "15672:15672"
+      - "5672:5672"
+      - "5432:5432"
+
+  rabbitmq-container:
+    image: rabbitmq:3.11-management
+    network_mode: "service:localhost"
+
+  app:
+    container_name: demo
+    command: java -jar target/demo-0.0.1-SNAPSHOT.jar
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+      - rabbitmq-container
+    volumes:
+      - ./:/app/app
+    network_mode: "service:localhost"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/postgres
+      - spring_rabbitmq_host=rabbitmq-container
+      - spring_rabbitmq_port=5672

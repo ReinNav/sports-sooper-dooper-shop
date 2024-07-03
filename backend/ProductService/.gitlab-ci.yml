@@ -1,0 +1,24 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+build:
+  stage: build
+  image: 3.9.8-eclipse-temurin-17
+  tags:
+    - gitlab-org
+  before_script:
+    - cd backend/ProductService
+  script:
+    - echo "Building Product Service"
+    - mvn clean install -B
+
+test:
+  stage: test
+  image: 3.9.8-eclipse-temurin-17
+  tags:
+    - gitlab-org
+  before_script:
+    - cd backend/ProductService
+  script:
+    - echo "Testing Product Service"
+    - mvn test -B

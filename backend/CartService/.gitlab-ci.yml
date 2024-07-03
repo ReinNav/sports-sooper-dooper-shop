@@ -1,0 +1,20 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+build:
+  stage: build
+  image: 3.9.8-eclipse-temurin-17
+  script:
+    - echo "Building Cart Service"
+    - mvn clean install -B
+  tags:
+    - gitlab-org
+
+test:
+  stage: test
+  image: 3.9.8-eclipse-temurin-17
+  tags:
+    - gitlab-org
+  script:
+    - echo "Testing Cart Service"
+    - mvn test -B

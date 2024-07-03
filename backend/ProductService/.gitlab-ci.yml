@@ -1,5 +1,6 @@
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  PRODUCT_SERVICE_DIR: backend/ProductService
 
 build_product_service:
   stage: build
@@ -7,10 +8,13 @@ build_product_service:
   tags:
     - gitlab-org
   before_script:
-    - cd backend/ProductService
+    - cd $PRODUCT_SERVICE_DIR
   script:
     - echo "Building Product Service"
     - mvn clean install -B
+  artifacts:
+    paths:
+      - $PRODUCT_SERVICE_DIR/target/*.jar
 
 test_product_service:
   stage: test
@@ -18,7 +22,7 @@ test_product_service:
   tags:
     - gitlab-org
   before_script:
-    - cd backend/ProductService
+    - cd $PRODUCT_SERVICE_DIR
   script:
     - echo "Testing Product Service"
     - mvn test -B

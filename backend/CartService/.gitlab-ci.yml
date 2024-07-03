@@ -1,18 +1,26 @@
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  CART_SERVICE_DIR: backend/CartService
 
 build_cart_service:
   stage: build
   image: maven:3.9.8-eclipse-temurin-17
+  before_script:
+    - cd $CART_SERVICE_DIR
   script:
     - echo "Building Cart Service"
     - mvn clean install -B
   tags:
     - gitlab-org
+  artifacts:
+    paths:
+      - $CART_SERVICE_DIR/target/*.jar
 
 test_cart_service:
   stage: test
   image: maven:3.9.8-eclipse-temurin-17
+  before_script:
+    - cd $CART_SERVICE_DIR
   tags:
     - gitlab-org
   script:

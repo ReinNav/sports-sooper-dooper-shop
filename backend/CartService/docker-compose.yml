@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  database-cart:
+    image: postgres:16
+    container_name: postgres_cart
+    volumes:
+      - ./:/app/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: cart
+    ports:
+      - "5433:5432"
+    networks:
+      - shared-network
+
+  app:
+    container_name: CartService
+    command: java -jar target/demo-0.0.1-SNAPSHOT.jar
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - database-cart
+    volumes:
+      - ./:/app/app
+    ports:
+     - "1235:1235"
+    networks:
+      - shared-network
+    environment:
+      - spring_rabbitmq_host=rabbitmq-container
+      - spring_rabbitmq_port=5672
+      - spring_rabbitmq_username=user
+      - spring_rabbitmq_password=password
+      - spring.datasource.url=jdbc:postgresql://database-cart:5432/cart
+      - spring.security.oauth2.resourceserver.jwt.issuer-uri=http://keycloak:8080/realms/ssds
+
+networks:
+  shared-network:
+    external: true

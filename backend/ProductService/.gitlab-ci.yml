@@ -3,7 +3,7 @@ variables:
 
 build:
   stage: build
-  image: 3.9.8-eclipse-temurin-17
+  image: maven:3.9.8-eclipse-temurin-17
   tags:
     - gitlab-org
   before_script:
@@ -14,7 +14,7 @@ build:
 
 test:
   stage: test
-  image: 3.9.8-eclipse-temurin-17
+  image: maven:3.9.8-eclipse-temurin-17
   tags:
     - gitlab-org
   before_script:

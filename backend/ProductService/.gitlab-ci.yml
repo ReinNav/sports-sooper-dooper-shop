@@ -1,7 +1,7 @@
 variables:
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
 
-build:
+build_product_service:
   stage: build
   image: maven:3.9.8-eclipse-temurin-17
   tags:
@@ -12,7 +12,7 @@ build:
     - echo "Building Product Service"
     - mvn clean install -B
 
-test:
+test_product_service:
   stage: test
   image: maven:3.9.8-eclipse-temurin-17
   tags:

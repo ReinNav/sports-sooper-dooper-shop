@@ -106,6 +106,7 @@ public class CartServiceImpl implements CartService {
     public Cart clearCart(UUID userId) {
         Cart cart = getCart(userId);
         cart.getCartItems().clear();
+        cart.calculateTotalPriceAndItems();
         cartRepository.save(cart);
         return cart;
     }

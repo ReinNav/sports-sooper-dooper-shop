@@ -1,5 +1,8 @@
 package com.paymentService.core.domain.service.impl;
 
+import com.paymentService.core.domain.exception.PaymentCreationException;
+import com.paymentService.core.domain.exception.PaymentNotFoundException;
+import com.paymentService.core.domain.exception.PaymentCouldNotCompleteException;
 import com.paymentService.core.domain.model.CompletedOrder;
 import com.paymentService.core.domain.model.Payment;
 import com.paymentService.core.domain.model.PaymentOrder;
@@ -23,38 +26,48 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public PaymentOrder createPayment(BigDecimal amount, String email, Long orderId) {
-        // Create Payment entity and save it
-        Payment payment = new Payment();
-        payment.setDate(new Date());
-        payment.setAmount(amount);
-        payment.setEmail(email);
-        payment.setStatus("Pending");
-        payment.setOrderId(orderId);
-        payment = paymentRepository.save(payment);
+        try {
+            Payment payment = new Payment();
+            payment.setDate(new Date());
+            payment.setAmount(amount);
+            payment.setEmail(email);
+            payment.setStatus("Pending");
+            payment.setOrderId(orderId);
+            payment = paymentRepository.save(payment);
 
-        // Call Paypal service to create the payment
-        PaymentOrder paymentOrder = paypalService.createPayment(amount);
+            // Call Paypal service to create payment
+            PaymentOrder paymentOrder = paypalService.createPayment(amount);
 
-        // Update Payment entity with the transaction id from Paypal
-        payment.setPaypalTransactionId(paymentOrder.getPayId());
-        paymentRepository.save(payment);
+            // attach paypal transaction id
+            payment.setPaypalTransactionId(paymentOrder.getPayId());
+            paymentRepository.save(payment);
 
-        return paymentOrder;
+            return paymentOrder;
+
+        } catch (Exception e) {
+            throw new PaymentCreationException("Failed to create payment", e);
+        }
     }
 
     @Override
     public Payment completePayment(String token) {
-        // Call Paypal service to complete the payment
-        CompletedOrder completedOrder = paypalService.completePayment(token);
+        try {
+            // Call Paypal service to complete the payment
+            CompletedOrder completedOrder = paypalService.completePayment(token);
+            Payment payment = paymentRepository.findByPaypalTransactionId(completedOrder.getPayId());
+            if (payment == null) {
+                throw new PaymentNotFoundException("Payment with PayPal transaction ID " + completedOrder.getPayId() + " not found");
+            }
 
-        // Update Payment entity based on the Paypal response
-        Payment payment = paymentRepository.findByPaypalTransactionId(completedOrder.getPayId());
-        if (payment != null) {
             payment.setStatus(completedOrder.getStatus());
             paymentRepository.save(payment);
-        }
 
-        return payment;
+            return payment;
+
+        } catch (PaymentNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new PaymentCouldNotCompleteException("Failed to complete payment", e);
+        }
     }
 }
-

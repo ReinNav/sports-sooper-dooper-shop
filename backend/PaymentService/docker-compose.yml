@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  database-payment:
+    image: postgres:16
+    container_name: postgres_payment
+    volumes:
+      - ./:/app/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: payment
+    ports:
+      - "5434:5432"
+    networks:
+      - shared-network
+
+  app:
+    container_name: PaymentService
+    command: java -jar target/PaymentService-1.0.0.jar
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - database-payment
+    volumes:
+      - ./:/app/app
+    ports:
+     - "1236:1236"
+    networks:
+      - shared-network
+    environment:
+      - spring_rabbitmq_host=rabbitmq-container
+      - spring_rabbitmq_port=5672
+      - spring_rabbitmq_username=user
+      - spring_rabbitmq_password=password
+      - spring.datasource.url=jdbc:postgresql://database-payment:5432/payment
+      - spring.security.oauth2.resourceserver.jwt.issuer-uri=http://keycloak:8080/realms/ssds
+
+networks:
+  shared-network:
+    external: true

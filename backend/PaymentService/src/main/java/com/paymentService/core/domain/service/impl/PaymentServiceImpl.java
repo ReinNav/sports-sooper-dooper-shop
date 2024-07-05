@@ -27,20 +27,18 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentOrder createPayment(BigDecimal amount, String email, Long orderId) {
         try {
+            // create payment in paypal
+            PaymentOrder paymentOrder = paypalService.createPayment(amount);
+
+            // save payment entry
             Payment payment = new Payment();
             payment.setDate(new Date());
             payment.setAmount(amount);
             payment.setEmail(email);
             payment.setStatus("Pending");
             payment.setOrderId(orderId);
-            payment = paymentRepository.save(payment);
-
-            // Call Paypal service to create payment
-            PaymentOrder paymentOrder = paypalService.createPayment(amount);
-
-            // attach paypal transaction id
             payment.setPaypalTransactionId(paymentOrder.getPayId());
-            paymentRepository.save(payment);
+            payment = paymentRepository.save(payment);
 
             return paymentOrder;
 

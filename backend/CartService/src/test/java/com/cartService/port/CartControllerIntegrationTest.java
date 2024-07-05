@@ -17,11 +17,15 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.RabbitMQContainer;
+import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+import org.testcontainers.utility.DockerImageName;
 
+import java.time.Duration;
 import java.util.UUID;
 
+import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.hamcrest.Matchers.hasKey;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -33,11 +37,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 public class CartControllerIntegrationTest {
 
+    private static final String DOCKER_IMAGE_NAME = "postgres:16.3-bullseye";
+    private static final String POSTGRESQL_USER = "test";
+    private static final String POSTGRESQL_PASSWORD = "test";
+    private static final String POSTGRESQL_DATABASE = "testdb";
+
+    private static DockerImageName imgName = DockerImageName.parse(DOCKER_IMAGE_NAME).asCompatibleSubstituteFor("postgres");
+    
+
     @Container
-    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16.3")
+    public static PostgreSQLContainer<?> CONTAINER = new PostgreSQLContainer<>(imgName)
             .withDatabaseName("testdb")
             .withUsername("test")
-            .withPassword("test");
+            .withPassword("test")
+            .withEnv("POSTGRESQL_DATABASE", POSTGRESQL_DATABASE)
+            .withEnv("POSTGRESQL_USER", POSTGRESQL_USER)
+            .withEnv("POSTGRESQL_PASSWORD", POSTGRESQL_PASSWORD)
+            .withExposedPorts(PostgreSQLContainer.POSTGRESQL_PORT);
 
     @Container
     public static RabbitMQContainer rabbitMQContainer = new RabbitMQContainer("rabbitmq:3.9.13-management-alpine")
@@ -68,6 +84,11 @@ public class CartControllerIntegrationTest {
 
     @BeforeEach
     void setUp() {
+        CONTAINER.setWaitStrategy(Wait.defaultWaitStrategy()
+                .withStartupTimeout(Duration.of(60, SECONDS)));
+
+        CONTAINER.start();
+
         cartRepository.deleteAll();
         cartItemRepository.deleteAll();
 

@@ -5,6 +5,7 @@ const apiClient = axios.create({
 });
 
 const ProductsApi = {
+
     getProducts: async () => {
         try {
             const response = await apiClient.get('/products', {});

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from "react-oidc-context";
 import { Button } from 'antd';
+import '../App.css';
 
 function Header() {
     const auth = useAuth();
@@ -26,13 +27,13 @@ function Header() {
         <div className="container-fluid bg-light">
             <div className="row align-items-center">
                 <div className="col">
-                    <img src="/logo192.png" alt="Logo" className="img-fluid" style={{ maxHeight: '50px' }} />
+                    <img src="/logo.png" alt="Logo" className="img-fluid" style={{ maxHeight: '70px' }} />
                 </div>
                 <div className="col text-center">
                     {user ? (
                         <span>Hi {user?.profile.preferred_username}</span>
                     ) : (
-                        <span>Welcome!</span>
+                        <span>WELCOME TO SPORT SUPER DOOPER - STORE</span>
                     )}
                 </div>
                 <div className="col text-end">

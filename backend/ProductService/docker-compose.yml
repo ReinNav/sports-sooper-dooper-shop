@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  database:
+    image: postgres:16
+    container_name: postgres_product
+    volumes:
+      - ./:/app/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: product
+    ports:
+      - "5432:5432"
+    networks:
+      - shared-network
+
+  app:
+    container_name: ProductService
+    command: java -jar target/demo-0.0.1-SNAPSHOT.jar
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    volumes:
+      - ./:/app/app
+    ports:
+     - "1234:1234"
+    networks:
+      - shared-network
+    environment:
+      - spring_rabbitmq_host=rabbitmq-container
+      - spring_rabbitmq_port=5672
+      - spring_rabbitmq_username=user
+      - spring_rabbitmq_password=password
+      - spring.security.oauth2.resourceserver.jwt.issuer-uri=http://keycloak:8080/realms/ssds
+
+networks:
+  shared-network:
+    external: true

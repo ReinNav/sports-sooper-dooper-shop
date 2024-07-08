@@ -1,0 +1,30 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/backend/CartService/.m2/repository"
+  CART_SERVICE_DIR: backend/CartService
+  DOCKER_HOST: "tcp://docker:2375/"
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+services:
+  - docker:20.10.9-dind
+
+build_cart_service:
+  stage: build
+  image: maven:3.9.8-eclipse-temurin-17
+  before_script:
+    - cd $CART_SERVICE_DIR
+  script:
+    - echo "Building Cart Service"
+    - mvn clean install -B -DskipTests
+  artifacts:
+    paths:
+      - $CART_SERVICE_DIR/target/*.jar
+
+test_cart_service:
+  stage: test
+  image: maven:3.9.8-eclipse-temurin-17
+  before_script:
+    - cd $CART_SERVICE_DIR
+  script:
+    - echo "Testing Cart Service"
+    - mvn test -B

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/paypal")
@@ -23,18 +24,14 @@ public class PaymentController {
     public PaymentOrder createPayment(
             @RequestParam("sum") BigDecimal sum,
             @RequestParam("email") String email,
-            @RequestParam("orderId") Long orderId) {
+            @RequestParam("orderId") UUID orderId) {
         return paymentService.createPayment(sum, email, orderId);
     }
 
     @PostMapping(value = "/capture")
     public String completePayment(@RequestParam("token") String token) {
         Payment payment = paymentService.completePayment(token);
-
-        if (payment.getStatus().equals("success")) {
-            // send message to order service to notify completion
-            paymentProducer.notifyOrderServicePaymentCompleted(payment);
-        }
+        paymentProducer.notifyPaymentCompleted(payment);
         return payment.getStatus();
     }
 }

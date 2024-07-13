@@ -24,7 +24,7 @@ public class PaypalService {
     public PaymentOrder createPayment(BigDecimal fee) {
         OrderRequest orderRequest = new OrderRequest();
         orderRequest.checkoutPaymentIntent("CAPTURE");
-        AmountWithBreakdown amountBreakdown = new AmountWithBreakdown().currencyCode("USD").value(fee.toString());
+        AmountWithBreakdown amountBreakdown = new AmountWithBreakdown().currencyCode("EUR").value(fee.toString());
         PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest().amountWithBreakdown(amountBreakdown);
         orderRequest.purchaseUnits(List.of(purchaseUnitRequest));
         ApplicationContext applicationContext = new ApplicationContext()

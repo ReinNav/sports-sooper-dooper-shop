@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class PaymentServiceImpl implements PaymentService {
@@ -25,7 +26,7 @@ public class PaymentServiceImpl implements PaymentService {
     private PaypalService paypalService;
 
     @Override
-    public PaymentOrder createPayment(BigDecimal amount, String email, Long orderId) {
+    public PaymentOrder createPayment(BigDecimal amount, String email, UUID orderId) {
         try {
             // create payment in paypal
             PaymentOrder paymentOrder = paypalService.createPayment(amount);

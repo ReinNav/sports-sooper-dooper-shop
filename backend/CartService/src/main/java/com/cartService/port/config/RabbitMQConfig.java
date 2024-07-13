@@ -18,6 +18,9 @@ public class RabbitMQConfig {
     @Value("cart_update")
     private String cartUpdateQueue;
 
+    @Value("payment_finished")
+    private String paymentFinishedQueue;
+
     @Value("cart")
     private String cartExchange;
 

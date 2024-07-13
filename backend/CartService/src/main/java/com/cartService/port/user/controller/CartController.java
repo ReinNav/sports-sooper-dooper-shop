@@ -62,6 +62,8 @@ public class CartController {
 
     @PostMapping("/clear")
     public Cart clearCart(@RequestParam UUID userId) {
+        Cart cart = cartService.getCart(userId);
+        cart.getCartItems().entrySet().forEach(entry -> cartProducer.changeProductAmount(entry.getKey(), entry.getValue()));
         return cartService.clearCart(userId);
     }
 }

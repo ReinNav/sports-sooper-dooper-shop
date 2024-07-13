@@ -29,6 +29,7 @@ import org.testcontainers.utility.DockerImageName;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Date;
+import java.util.UUID;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.mockito.ArgumentMatchers.any;
@@ -100,7 +101,7 @@ public class PaymentControllerIntegrationTest {
         mockMvc.perform(post("/paypal/init")
                         .param("sum", "100.00")
                         .param("email", "test@example.com")
-                        .param("orderId", "1")
+                        .param("orderId", UUID.randomUUID().toString())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -113,7 +114,7 @@ public class PaymentControllerIntegrationTest {
         payment.setAmount(BigDecimal.valueOf(100.00));
         payment.setEmail("test@example.com");
         payment.setStatus("Pending");
-        payment.setOrderId(1L);
+        payment.setOrderId(UUID.randomUUID());
         paymentRepository.save(payment);
 
         mockMvc.perform(post("/paypal/capture")

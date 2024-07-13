@@ -25,7 +25,10 @@ public class Payment {
     private String paypalTransactionId;
 
     @Column(nullable = false)
-    private Long orderId;
+    private UUID orderId;
+
+    @Column(nullable = false)
+    private UUID userId;
 
     @Column(nullable = false)
     private Date date;

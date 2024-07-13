@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -44,16 +45,16 @@ class PaymentControllerTest {
     @Test
     void createPayment_Success() throws Exception {
         PaymentOrder paymentOrder = new PaymentOrder("success", "paypalId", "redirectUrl");
-        when(paymentService.createPayment(any(BigDecimal.class), anyString(), any())).thenReturn(paymentOrder);
+        when(paymentService.createPayment(any(BigDecimal.class), any(), any())).thenReturn(paymentOrder);
 
         mockMvc.perform(post("/paypal/init")
                         .param("sum", "100.00")
-                        .param("email", "test@example.com")
-                        .param("orderId", "1")
+                        .param("userId", UUID.randomUUID().toString())
+                        .param("orderId", UUID.randomUUID().toString())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        verify(paymentService, times(1)).createPayment(any(BigDecimal.class), anyString(), any());
+        verify(paymentService, times(1)).createPayment(any(BigDecimal.class), any(), any());
     }
 
     @Test

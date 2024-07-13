@@ -37,8 +37,5 @@ public class Payment {
     private BigDecimal amount;
 
     @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
     private String status;
 }

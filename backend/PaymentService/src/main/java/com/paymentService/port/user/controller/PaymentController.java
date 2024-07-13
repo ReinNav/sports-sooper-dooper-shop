@@ -23,9 +23,9 @@ public class PaymentController {
     @PostMapping(value = "/init")
     public PaymentOrder createPayment(
             @RequestParam("sum") BigDecimal sum,
-            @RequestParam("email") String email,
+            @RequestParam("userId") UUID userId,
             @RequestParam("orderId") UUID orderId) {
-        return paymentService.createPayment(sum, email, orderId);
+        return paymentService.createPayment(sum, userId, orderId);
     }
 
     @PostMapping(value = "/capture")

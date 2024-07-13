@@ -100,7 +100,7 @@ public class PaymentControllerIntegrationTest {
     void createPayment_Success() throws Exception {
         mockMvc.perform(post("/paypal/init")
                         .param("sum", "100.00")
-                        .param("email", "test@example.com")
+                        .param("userId", UUID.randomUUID().toString())
                         .param("orderId", UUID.randomUUID().toString())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -112,7 +112,7 @@ public class PaymentControllerIntegrationTest {
         payment.setPaypalTransactionId("paypalId");
         payment.setDate(new Date());
         payment.setAmount(BigDecimal.valueOf(100.00));
-        payment.setEmail("test@example.com");
+        payment.setUserId(UUID.randomUUID());
         payment.setStatus("Pending");
         payment.setOrderId(UUID.randomUUID());
         paymentRepository.save(payment);

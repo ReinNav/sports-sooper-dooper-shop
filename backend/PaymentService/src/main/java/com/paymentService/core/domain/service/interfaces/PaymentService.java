@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 public interface PaymentService {
-    PaymentOrder createPayment(BigDecimal sum, String email, UUID orderId);
+    PaymentOrder createPayment(BigDecimal sum, UUID userId, UUID orderId);
 
     Payment completePayment(String token);
 }

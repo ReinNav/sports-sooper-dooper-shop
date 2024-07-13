@@ -27,8 +27,8 @@ public class RabbitMQConfig {
     @Value("product")
     private String productExchange;
 
-    @Value("cart.item.added")
-    private String cartItemAddedRoutingKey;
+    @Value("cart.item.quantity.change")
+    private String cartItemQuantityChangeRoutingKey;
 
     @Value("product.product.updated")
     private String productUpdatedRoutingKey;
@@ -48,6 +48,12 @@ public class RabbitMQConfig {
         return new Queue(productUpdateQueue);
     }
 
+
+    @Bean
+    public Queue paymentFinishedQueue(){
+        return new Queue(paymentFinishedQueue);
+    }
+
     @Bean
     public TopicExchange productExchange(){
         return new TopicExchange(productExchange);
@@ -58,7 +64,7 @@ public class RabbitMQConfig {
         return BindingBuilder
                 .bind(cartUpdateQueue())
                 .to(cartExchange())
-                .with(cartItemAddedRoutingKey);
+                .with(cartItemQuantityChangeRoutingKey);
     }
 
     @Bean

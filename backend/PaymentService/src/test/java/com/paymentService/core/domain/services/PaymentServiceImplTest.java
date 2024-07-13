@@ -56,7 +56,7 @@ class PaymentServiceImplTest {
 
         assertNotNull(result);
         assertEquals("paypalId", result.getPayId());
-        verify(paymentRepository, times(2)).save(any(Payment.class));
+        verify(paymentRepository, times(1)).save(any(Payment.class));
     }
 
     @Test

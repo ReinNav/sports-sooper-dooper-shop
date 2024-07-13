@@ -1,0 +1,30 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/backend/PaymentService/.m2/repository"
+  PAYMENT_SERVICE_DIR: backend/PaymentService
+  DOCKER_HOST: "tcp://docker:2375/"
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+services:
+  - docker:20.10.9-dind
+
+build_payment_service:
+  stage: build
+  image: maven:3.9.8-eclipse-temurin-17
+  before_script:
+    - cd $PAYMENT_SERVICE_DIR
+  script:
+    - echo "Building Payment Service"
+    - mvn clean install -B -DskipTests
+  artifacts:
+    paths:
+      - $PAYMENT_SERVICE_DIR/target/*.jar
+
+test_payment_service:
+  stage: test
+  image: maven:3.9.8-eclipse-temurin-17
+  before_script:
+    - cd $PAYMENT_SERVICE_DIR
+  script:
+    - echo "Testing Payment Service"
+    - mvn test -B

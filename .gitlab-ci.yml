@@ -1,3 +1,4 @@
 include:  
   - backend/CartService/.gitlab-ci.yml
   - backend/ProductService/.gitlab-ci.yml
+  - backend/PaymentService/.gitlab-ci.yml

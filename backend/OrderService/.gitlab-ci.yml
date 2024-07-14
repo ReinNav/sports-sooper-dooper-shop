@@ -1,0 +1,30 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/backend/OrderService/.m2/repository"
+  ORDER_SERVICE_DIR: backend/OrderService
+  DOCKER_HOST: "tcp://docker:2375/"
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+services:
+  - docker:20.10.9-dind
+
+build_order_service:
+  stage: build
+  image: maven:3.9.8-eclipse-temurin-17
+  before_script:
+    - cd $ORDER_SERVICE_DIR
+  script:
+    - echo "Building Order Service"
+    - mvn clean install -B -DskipTests
+  artifacts:
+    paths:
+      - $ORDER_SERVICE_DIR/target/*.jar
+
+test_order_service:
+  stage: test
+  image: maven:3.9.8-eclipse-temurin-17
+  before_script:
+    - cd $ORDER_SERVICE_DIR
+  script:
+    - echo "Testing Order Service"
+    - mvn test -B

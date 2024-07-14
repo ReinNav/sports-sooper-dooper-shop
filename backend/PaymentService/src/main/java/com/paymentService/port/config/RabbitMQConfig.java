@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("payment_finished_queue")
+    @Value("payment_finished")
     private String paymentFinishedQueue;
 
     @Value("payment")

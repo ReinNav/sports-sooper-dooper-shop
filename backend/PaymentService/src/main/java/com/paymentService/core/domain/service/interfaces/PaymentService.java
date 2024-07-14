@@ -5,9 +5,10 @@ import com.paymentService.core.domain.model.Payment;
 import com.paymentService.core.domain.model.PaymentOrder;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 public interface PaymentService {
-    PaymentOrder createPayment(BigDecimal sum, String email, Long orderId);
+    PaymentOrder createPayment(BigDecimal sum, UUID userId, UUID orderId);
 
     Payment completePayment(String token);
 }

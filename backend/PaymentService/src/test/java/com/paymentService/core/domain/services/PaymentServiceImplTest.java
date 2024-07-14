@@ -17,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -42,8 +43,8 @@ class PaymentServiceImplTest {
     @Test
     void createPayment_Success() {
         BigDecimal amount = BigDecimal.valueOf(100);
-        String email = "test@example.com";
-        Long orderId = 1L;
+        UUID userId = UUID.randomUUID();
+        UUID orderId = UUID.randomUUID();
 
         PaymentOrder paymentOrder = new PaymentOrder("success", "paypalId", "redirectUrl");
         when(paypalService.createPayment(any(BigDecimal.class))).thenReturn(paymentOrder);
@@ -52,7 +53,7 @@ class PaymentServiceImplTest {
         payment.setPaypalTransactionId(paymentOrder.getPayId());
         when(paymentRepository.save(any(Payment.class))).thenReturn(payment);
 
-        PaymentOrder result = paymentService.createPayment(amount, email, orderId);
+        PaymentOrder result = paymentService.createPayment(amount, userId, orderId);
 
         assertNotNull(result);
         assertEquals("paypalId", result.getPayId());
@@ -62,12 +63,12 @@ class PaymentServiceImplTest {
     @Test
     void createPayment_Failure() {
         BigDecimal amount = BigDecimal.valueOf(100);
-        String email = "test@example.com";
-        Long orderId = 1L;
+        UUID userId = UUID.randomUUID();
+        UUID orderId = UUID.randomUUID();
 
         when(paymentRepository.save(any(Payment.class))).thenThrow(new RuntimeException("Database error"));
 
-        assertThrows(PaymentCreationException.class, () -> paymentService.createPayment(amount, email, orderId));
+        assertThrows(PaymentCreationException.class, () -> paymentService.createPayment(amount, userId, orderId));
     }
 
     @Test

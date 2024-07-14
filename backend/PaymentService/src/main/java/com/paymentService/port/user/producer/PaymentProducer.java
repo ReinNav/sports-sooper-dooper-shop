@@ -25,7 +25,7 @@ public class PaymentProducer {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void notifyOrderServicePaymentCompleted(Payment payment) {
+    public void notifyPaymentCompleted(Payment payment) {
         PaymentCompletedDTO paymentCompletedDTO = PaymentCompletedDTOMapper.toDTO(payment);
         ObjectMapper objectMapper = new ObjectMapper();
         String message;

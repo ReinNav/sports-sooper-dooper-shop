@@ -10,6 +10,7 @@ public class PaymentCompletedDTOMapper {
         dto.setPaymentId(payment.getPaypalTransactionId());
         dto.setOrderId(payment.getOrderId());
         dto.setStatus(payment.getStatus());
+        dto.setUserId(payment.getUserId());
         return dto;
     }
 }

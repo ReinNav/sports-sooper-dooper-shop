@@ -44,6 +44,6 @@ public class CartProducer {
 
     public void changeProductAmount(CartItem item, int difference) {
         ProductQuantityChangeDTO productChangeDTO = productQuantityChangeMapper.getProductQuantityChangeDTO(item, difference);
-        sendMessage(productChangeDTO, "cart.item.added");
+        sendMessage(productChangeDTO, "cart.item.quantity.change");
     }
 }

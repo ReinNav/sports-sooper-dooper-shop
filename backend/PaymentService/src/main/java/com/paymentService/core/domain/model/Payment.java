@@ -25,16 +25,16 @@ public class Payment {
     private String paypalTransactionId;
 
     @Column(nullable = false)
-    private Long orderId;
+    private UUID orderId;
+
+    @Column(nullable = false)
+    private UUID userId;
 
     @Column(nullable = false)
     private Date date;
 
     @Column(nullable = false)
     private BigDecimal amount;
-
-    @Column(nullable = false)
-    private String email;
 
     @Column(nullable = false)
     private String status;

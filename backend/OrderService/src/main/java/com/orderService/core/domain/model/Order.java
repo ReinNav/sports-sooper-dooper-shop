@@ -19,6 +19,7 @@ import java.util.UUID;
 public class Order {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID orderId;
     private String userId;
     private String date;
@@ -37,5 +38,7 @@ public class Order {
     private ContactDetails contactDetails;
 
     private OrderStatus status;
+
+    private ShipmentType shipmentType;
 
 }

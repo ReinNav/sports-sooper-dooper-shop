@@ -3,6 +3,7 @@ package com.orderService.port.user.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.orderService.core.domain.model.Order;
 import com.orderService.core.domain.model.OrderStatus;
+import com.orderService.core.domain.model.ShipmentType;
 import com.orderService.core.domain.service.interfaces.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,6 +95,7 @@ public class OrderControllerIntegrationTest {
         order.setDate("2023-07-13");
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
+        order.setShipmentType(ShipmentType.DHL);
         order.setStatus(OrderStatus.PENDING);
 
         mockMvc.perform(post("/order")
@@ -110,6 +112,7 @@ public class OrderControllerIntegrationTest {
         order.setOrderId(UUID.randomUUID());
         order.setUserId("user1");
         order.setDate("2023-07-13");
+        order.setShipmentType(ShipmentType.DHL);
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);
@@ -127,6 +130,7 @@ public class OrderControllerIntegrationTest {
         order.setOrderId(UUID.randomUUID());
         order.setUserId("user1");
         order.setDate("2023-07-13");
+        order.setShipmentType(ShipmentType.DHL);
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);
@@ -143,6 +147,7 @@ public class OrderControllerIntegrationTest {
         Order order = new Order();
         order.setOrderId(UUID.randomUUID());
         order.setUserId("user1");
+        order.setShipmentType(ShipmentType.DHL);
         order.setDate("2023-07-13");
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));

@@ -3,3 +3,4 @@ include:
   - backend/ProductService/.gitlab-ci.yml
   - backend/PaymentService/.gitlab-ci.yml
   - backend/OrderService/.gitlab-ci.yml
+  - backend/EmailService/.gitlab-ci.yml

@@ -1,6 +1,7 @@
 package com.orderService.domain.services;
 import com.orderService.core.domain.model.Order;
 import com.orderService.core.domain.model.OrderStatus;
+import com.orderService.core.domain.model.ShipmentType;
 import com.orderService.core.domain.service.impl.OrderServiceImpl;
 import com.orderService.core.domain.service.interfaces.OrderRepository;
 import com.orderService.core.domain.service.interfaces.OrderService;
@@ -37,6 +38,7 @@ public class OrderServiceImplTest {
         order.setOrderId(UUID.randomUUID());
         order.setUserId("user1");
         order.setDate("2023-07-13");
+        order.setShipmentType(ShipmentType.DHL);
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);

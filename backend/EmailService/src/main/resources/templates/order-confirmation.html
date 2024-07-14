@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: #f8f8f8;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .content {
+            margin: 20px;
+        }
+        .order-summary {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .order-summary th, .order-summary td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .order-summary th {
+            background-color: #f2f2f2;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <img th:src="@{/images/logo.png}" alt="Logo" style="max-width: 150px;">
+</div>
+<div class="content">
+    <h2>Order Confirmation</h2>
+    <p>Dear <span th:text="${order.contactDetails.contactEmail}"></span>,</p>
+    <p>Thank you for your order. Here are the details:</p>
+    <table class="order-summary">
+        <tr>
+            <th>Product</th>
+            <th>Size</th>
+            <th>Colour</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        <tr th:each="item : ${order.orderItems}">
+            <td th:text="${item.productName}"></td>
+            <td th:text="${item.size}"></td>
+            <td th:text="${item.colour}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${item.price}"></td>
+        </tr>
+    </table>
+    <p>Total Amount: <strong th:text="${order.totalAmount}"></strong></p>
+    <h3>Shipping Address</h3>
+    <p th:text="${order.shippingAddress.firstName} + ' ' + ${order.shippingAddress.lastName}"></p>
+    <p th:text="${order.shippingAddress.street} + ', ' + ${order.shippingAddress.houseNumber}"></p>
+    <p th:text="${order.shippingAddress.city} + ', ' + ${order.shippingAddress.postalCode}"></p>
+    <p th:text="${order.shippingAddress.country}"></p>
+    <h3>Billing Address</h3>
+    <p th:text="${order.billingAddress.firstName} + ' ' + ${order.billingAddress.lastName}"></p>
+    <p th:text="${order.billingAddress.street} + ', ' + ${order.billingAddress.houseNumber}"></p>
+    <p th:text="${order.billingAddress.city} + ', ' + ${order.billingAddress.postalCode}"></p>
+    <p th:text="${order.billingAddress.country}"></p>
+</div>
+<div class="footer">
+    <p>Thank you for shopping with us!</p>
+    <p>If you have any questions, contact us at support@example.com or call us at (123) 456-7890.</p>
+</div>
+</body>
+</html>

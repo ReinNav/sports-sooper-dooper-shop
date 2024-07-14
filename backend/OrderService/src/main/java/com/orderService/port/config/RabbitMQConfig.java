@@ -16,7 +16,6 @@ public class RabbitMQConfig {
         return new TopicExchange("payment");
     }
 
-
     @Bean
     public TopicExchange orderExchange() {
         return new TopicExchange("order");
@@ -33,9 +32,17 @@ public class RabbitMQConfig {
     @Value("order.order.confirmed")
     private String orderConfirmedRoutingKey;
 
+    @Value("order.payment.failed")
+    private String orderPaymentFailedRoutingKey;
+
     @Bean
-    public Queue orderConfirmedQueue() {
-        return new Queue("order_confirmed");
+    public Queue orderConfirmedSuccessQueue() {
+        return new Queue("order_confirmed_success");
+    }
+
+    @Bean
+    public Queue orderPaymentFailedQueue() {
+        return new Queue("order_payment_failed");
     }
 
     @Bean
@@ -46,17 +53,25 @@ public class RabbitMQConfig {
     @Bean
     public Binding binding(){
         return BindingBuilder
-                .bind(paymentFinishedQueue())
-                .to(paymentExchange())
-                .with(finishedPaymentRoutingKey);
+                .bind(orderConfirmedSuccessQueue())
+                .to(orderExchange())
+                .with(orderConfirmedRoutingKey);
     }
 
     @Bean
     public Binding binding2(){
         return BindingBuilder
-                .bind(orderConfirmedQueue())
+                .bind(orderPaymentFailedQueue())
                 .to(orderExchange())
-                .with(orderConfirmedRoutingKey);
+                .with(orderPaymentFailedRoutingKey);
+    }
+
+    @Bean
+    public Binding binding3(){
+        return BindingBuilder
+                .bind(paymentFinishedQueue())
+                .to(paymentExchange())
+                .with(finishedPaymentRoutingKey);
     }
 
 

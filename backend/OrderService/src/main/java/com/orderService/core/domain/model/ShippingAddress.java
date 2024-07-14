@@ -21,6 +21,12 @@ public class ShippingAddress {
     private String userId; // for getting saved addresses
 
     @Getter
+    private String firstName;
+
+    @Getter
+    private String lastName;
+
+    @Getter
     private String street;
 
     @Getter

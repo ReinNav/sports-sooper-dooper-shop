@@ -21,7 +21,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID orderId;
-    private String userId;
+    private UUID userId;
     private String date;
 
     @ElementCollection

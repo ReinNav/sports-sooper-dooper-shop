@@ -33,7 +33,7 @@ public class CartServiceImpl implements CartService {
         return cartRepository.findByUserId(userId).orElseGet(() -> {
             Cart newCart = new Cart();
             newCart.setUserId(userId);
-            newCart.setCartItems(new HashMap<>());
+            newCart.setCartItems(new ArrayList<>());
             return cartRepository.save(newCart);
         });
     }
@@ -41,62 +41,56 @@ public class CartServiceImpl implements CartService {
     @Override
     public Cart addToCart(UUID userId, CartItem cartItem, int quantity) {
         Cart cart = getCart(userId);
-        CartItem itemToAdd;
-        try {
-            itemToAdd = cartItemService.findByProductId(cartItem.getProductId());
+        Optional<CartItem> existingItem = cart.getCartItems().stream()
+                .filter(item -> item.getProductId().equals(cartItem.getProductId()))
+                .findFirst();
 
-            int existingQuantity = cart.getCartItems().getOrDefault(itemToAdd, 0);
-            cart.getCartItems().put(itemToAdd, existingQuantity + quantity);
-        } catch (CartItemNotFound | NoSuchElementException e) {
-            itemToAdd = cartItemRepository.save(cartItem);
-            cart.getCartItems().put(itemToAdd, quantity);
+        if (existingItem.isPresent()) {
+            CartItem item = existingItem.get();
+            item.setQuantity(item.getQuantity() + quantity);
+        } else {
+            cartItem.setQuantity(quantity);
+            cart.getCartItems().add(cartItem);
         }
 
         cart.calculateTotalPriceAndItems();
-        cartRepository.save(cart);
-        return cart;
+        return cartRepository.save(cart);
     }
 
     @Override
-    public Cart subtractFromCart(UUID userId, CartItem cartItem, int quantity) throws CartItemNotFound{
+    public Cart subtractFromCart(UUID userId, CartItem cartItem, int quantity) throws CartItemNotFound {
         Cart cart = getCart(userId);
-        CartItem itemToSubtract;
+        Optional<CartItem> existingItem = cart.getCartItems().stream()
+                .filter(item -> item.getProductId().equals(cartItem.getProductId()))
+                .findFirst();
 
-        try {
-            itemToSubtract = cartItemService.findByProductId(cartItem.getProductId());
+        if (existingItem.isPresent()) {
+            CartItem item = existingItem.get();
+            item.setQuantity(item.getQuantity() - quantity);
 
-            Integer existingQuantity = cart.getCartItems().get(itemToSubtract);
-
-            if (existingQuantity == null) {
-                throw new NoSuchElementException();
+            if (item.getQuantity() <= 0) {
+                cart.getCartItems().remove(item);
             }
-
-            cart.getCartItems().put(itemToSubtract, existingQuantity.intValue() - quantity);
-        } catch (NoSuchElementException e) {
+        } else {
             throw new CartItemNotFound();
         }
 
         cart.calculateTotalPriceAndItems();
-        cartRepository.save(cart);
-        return cart;
+        return cartRepository.save(cart);
     }
+
     @Override
-    public Map.Entry<CartItem, Integer> removeFromCart(UUID userId, UUID productId) throws CartItemNotFound {
+    public CartItem removeFromCart(UUID userId, UUID productId) throws CartItemNotFound {
         Cart cart = getCart(userId);
-        Map.Entry<CartItem, Integer> entryToRemove = null;
+        Optional<CartItem> itemToRemove = cart.getCartItems().stream()
+                .filter(item -> item.getProductId().equals(productId))
+                .findFirst();
 
-        for (Map.Entry<CartItem, Integer> entry : cart.getCartItems().entrySet()) {
-            if (entry.getKey().getProductId().equals(productId)) {
-                entryToRemove = entry;
-                break;
-            }
-        }
-
-        if (entryToRemove != null) {
-            cart.getCartItems().remove(entryToRemove.getKey());
+        if (itemToRemove.isPresent()) {
+            cart.getCartItems().remove(itemToRemove.get());
             cart.calculateTotalPriceAndItems();
             cartRepository.save(cart);
-            return entryToRemove;
+            return itemToRemove.get();
         } else {
             throw new CartItemNotFound();
         }

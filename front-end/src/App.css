@@ -38,10 +38,20 @@
 }
 
 .row.align-items-center {
-  background-color: yellow;
+  background-color: white;
 }
 
 .col.text-center span {
   font-size: 20px;
   font-weight: bold;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }

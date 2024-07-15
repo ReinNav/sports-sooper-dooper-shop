@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from "react-oidc-context";
-import { Button } from 'antd';
+import { ShoppingCartOutlined } from '@ant-design/icons';
 import '../App.css';
+import '../Header.css';
 
 function Header() {
     const auth = useAuth();
@@ -23,42 +24,46 @@ function Header() {
         });
     };
 
+    const handleClickSearch = () => {
+        console.log('Search button clicked');
+    };
+
+    const handleCartClick = () => {
+        window.location.href = '/cart';
+    };
+
     return (
-        <div className="container-fluid bg-light">
-            <div className="row align-items-center">
-                <div className="col">
-                    <img src="/logo.png" alt="Logo" className="img-fluid" style={{ maxHeight: '70px' }} />
+        <header className="header">
+            <div className="header-content">
+                <div className="logo">
+                    <img src="/logo.png" alt="Logo" />
                 </div>
-                <div className="col text-center">
-                    {user ? (
-                        <span>Hi {user?.profile.preferred_username}</span>
-                    ) : (
-                        <span>WELCOME TO SPORT SUPER DOOPER - STORE</span>
-                    )}
+                <nav className="navbar-category">
+                    <a href="#" className="nav-link">OBERTEILE</a>
+                    <a href="#" className="nav-link">HOSEN</a>
+                    <a href="#" className="nav-link">SCHUHE</a>
+                </nav>
+                <div className="search-bar">
+                    <input
+                        type="text"
+                        placeholder="Suche..."
+                    />
+                    <button className="search-button" onClick={handleClickSearch}>Suchen</button>
                 </div>
-                <div className="col text-end">
+                <ShoppingCartOutlined className='cart-icon' onClick={() => (handleCartClick())} />
+                <div className="auth-buttons">
                     {user ? (
-                        <Button
-                            type="primary"
-                            size="small"
-                            onClick={handleLogout}
-                            danger
-                        >
+                        <button className="auth-button logout-button" onClick={handleLogout}>
                             Logout
-                        </Button>
+                        </button>
                     ) : (
-                        <Button
-                            type="primary"
-                            size="small"
-                            onClick={handleLogin}
-                            danger
-                        >
+                        <button className="auth-button login-button" onClick={handleLogin}>
                             Login
-                        </Button>
+                        </button>
                     )}
                 </div>
             </div>
-        </div>
+        </header>
     );
 }
 

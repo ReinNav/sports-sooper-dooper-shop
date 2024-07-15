@@ -1,6 +1,5 @@
 package com.cartService.port;
 
-import com.cartService.core.domain.model.Cart;
 import com.cartService.core.domain.model.CartItem;
 import com.cartService.core.domain.service.interfaces.CartRepository;
 import com.cartService.core.domain.service.interfaces.CartItemRepository;
@@ -26,7 +25,7 @@ import java.time.Duration;
 import java.util.UUID;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
-import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -43,7 +42,7 @@ public class CartControllerIntegrationTest {
     private static final String POSTGRESQL_DATABASE = "testdb";
 
     private static DockerImageName imgName = DockerImageName.parse(DOCKER_IMAGE_NAME).asCompatibleSubstituteFor("postgres");
-    
+
 
     @Container
     public static PostgreSQLContainer<?> CONTAINER = new PostgreSQLContainer<>(imgName)
@@ -111,7 +110,7 @@ public class CartControllerIntegrationTest {
         mockMvc.perform(get("/cart/{userId}", userId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.userId").value(userId.toString()))
-                .andExpect(jsonPath("$.cartItems").isEmpty());
+                .andExpect(jsonPath("$.cartItems", hasSize(0)));
     }
 
     @Test
@@ -122,8 +121,8 @@ public class CartControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(cartItem)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.cartItems", hasKey(cartItem.toString())))
-                .andExpect(jsonPath("$.cartItems['" + cartItem.toString() + "']", is(2)))
+                .andExpect(jsonPath("$.cartItems[0].productId").value(cartItem.getProductId().toString()))
+                .andExpect(jsonPath("$.cartItems[0].quantity", is(2)))
                 .andExpect(jsonPath("$.totalPrice").value(20.0f))
                 .andExpect(jsonPath("$.totalNumberOfItems").value(2));
     }
@@ -147,9 +146,8 @@ public class CartControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(cartItem)))
                 .andExpect(status().isOk())
-                // Expect item exist with 2 quantity
-                .andExpect(jsonPath("$.cartItems", hasKey(cartItem.toString())))
-                .andExpect(jsonPath("$.cartItems['" + cartItem.toString() + "']", is(2)))
+                .andExpect(jsonPath("$.cartItems[0].productId").value(cartItem.getProductId().toString()))
+                .andExpect(jsonPath("$.cartItems[0].quantity", is(2)))
                 .andExpect(jsonPath("$.totalNumberOfItems").value(2))
                 .andExpect(jsonPath("$.totalPrice").value(20.0f));
     }
@@ -171,7 +169,7 @@ public class CartControllerIntegrationTest {
                         .param("userId", userId.toString())
                         .param("productId", cartItem.getProductId().toString()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.cartItems").isEmpty())
+                .andExpect(jsonPath("$.cartItems", hasSize(0)))
                 .andExpect(jsonPath("$.totalNumberOfItems").value(0))
                 .andExpect(jsonPath("$.totalPrice").value(0.0f));
     }
@@ -191,7 +189,7 @@ public class CartControllerIntegrationTest {
         mockMvc.perform(post("/cart/clear")
                         .param("userId", userId.toString()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.cartItems").isEmpty())
+                .andExpect(jsonPath("$.cartItems", hasSize(0)))
                 .andExpect(jsonPath("$.totalNumberOfItems").value(0))
                 .andExpect(jsonPath("$.totalPrice").value(0.0f));
     }

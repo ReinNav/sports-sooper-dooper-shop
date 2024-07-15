@@ -15,8 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
@@ -56,10 +56,11 @@ public class CartServiceTest {
         cartItem.setGender("Female");
         cartItem.setSize("M");
         cartItem.setColour("Red");
+        cartItem.setQuantity(1);
 
         cart = new Cart();
         cart.setUserId(userId);
-        cart.setCartItems(new HashMap<>());
+        cart.setCartItems(new ArrayList<>());
     }
 
     @Test
@@ -85,35 +86,34 @@ public class CartServiceTest {
         Cart result = cartService.addToCart(userId, cartItem, 1);
 
         assertEquals(1, result.getCartItems().size());
-        assertEquals(1, result.getCartItems().get(cartItem));
+        assertEquals(1, result.getCartItems().get(0).getQuantity());
     }
 
     @Test
     public void testAddToCart_ExistingItemInCartQuantityUpdated() throws CartItemNotFound {
-        cart.getCartItems().put(cartItem, 2); // 2 items already in the cart
+        cart.getCartItems().add(cartItem); // 1 item already in the cart
         when(cartRepository.findByUserId(userId)).thenReturn(Optional.of(cart));
         when(cartItemService.findByProductId(cartItem.getProductId())).thenReturn(cartItem);
         when(cartRepository.save(any(Cart.class))).thenReturn(cart);
 
         Cart result = cartService.addToCart(userId, cartItem, 2);
 
-        // One item added to cart
+        // One item in the cart
         assertEquals(1, result.getCartItems().size());
         // Quantity of the item in the cart updated by 2
-        assertEquals(4, result.getCartItems().get(cartItem));
+        assertEquals(3, result.getCartItems().get(0).getQuantity());
     }
 
     @Test
     public void testSubtractFromCart_ExistingItem() throws CartItemNotFound {
-        cart.getCartItems().put(cartItem, 3); // 3 items in the cart
+        cart.getCartItems().add(cartItem); // 1 item in the cart with quantity 1
         when(cartRepository.findByUserId(userId)).thenReturn(Optional.of(cart));
         when(cartItemService.findByProductId(cartItem.getProductId())).thenReturn(cartItem);
         when(cartRepository.save(any(Cart.class))).thenReturn(cart);
 
         Cart result = cartService.subtractFromCart(userId, cartItem, 1);
 
-        assertEquals(1, result.getCartItems().size());
-        assertEquals(2, result.getCartItems().get(cartItem));
+        assertEquals(0, result.getCartItems().size());
     }
 
     @Test
@@ -126,13 +126,12 @@ public class CartServiceTest {
 
     @Test
     public void testRemoveFromCart_ItemExists() throws CartItemNotFound {
-        cart.getCartItems().put(cartItem, 1);
+        cart.getCartItems().add(cartItem);
         when(cartRepository.findByUserId(userId)).thenReturn(Optional.of(cart));
 
-        Map.Entry<CartItem, Integer> removedItem = cartService.removeFromCart(userId, cartItem.getProductId());
+        CartItem removedItem = cartService.removeFromCart(userId, cartItem.getProductId());
 
-        assertEquals(cartItem, removedItem.getKey());
-        assertEquals(1, removedItem.getValue());
+        assertEquals(cartItem, removedItem);
         assertTrue(cart.getCartItems().isEmpty());
         verify(cartRepository, times(1)).save(cart);
     }
@@ -146,7 +145,7 @@ public class CartServiceTest {
 
     @Test
     public void testClearCart() {
-        cart.getCartItems().put(cartItem, 1);
+        cart.getCartItems().add(cartItem);
         when(cartRepository.findByUserId(userId)).thenReturn(Optional.of(cart));
 
         Cart result = cartService.clearCart(userId);

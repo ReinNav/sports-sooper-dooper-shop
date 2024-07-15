@@ -1,0 +1,30 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/backend/EmailService/.m2/repository"
+  EMAIL_SERVICE_DIR: backend/EmailService
+  DOCKER_HOST: "tcp://docker:2375/"
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+services:
+  - docker:20.10.9-dind
+
+build_email_service:
+  stage: build
+  image: maven:3.9.8-eclipse-temurin-17
+  before_script:
+    - cd $EMAIL_SERVICE_DIR
+  script:
+    - echo "Building Email Service"
+    - mvn clean install -B -DskipTests
+  artifacts:
+    paths:
+      - $EMAIL_SERVICE_DIR/target/*.jar
+
+test_email_service:
+  stage: test
+  image: maven:3.9.8-eclipse-temurin-17
+  before_script:
+    - cd $EMAIL_SERVICE_DIR
+  script:
+    - echo "Testing Email Service"
+    - mvn test -B

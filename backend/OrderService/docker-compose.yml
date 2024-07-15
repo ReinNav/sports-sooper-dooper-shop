@@ -34,7 +34,7 @@ services:
       - spring_rabbitmq_port=5672
       - spring_rabbitmq_username=user
       - spring_rabbitmq_password=password
-      - spring.datasource.url=jdbc:postgresql://database-payment:5432/order
+      - spring.datasource.url=jdbc:postgresql://database-order:5432/order
       - spring.security.oauth2.resourceserver.jwt.issuer-uri=http://keycloak:8080/realms/ssds
 
 networks:

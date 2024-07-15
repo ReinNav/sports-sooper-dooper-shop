@@ -17,12 +17,12 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<Order> getOrdersByUserId(UUID userId) {
+        return orderRepository.findByUserId(userId);
     }
 
     public Optional<Order> getOrderById(UUID orderId) {
-        return orderRepository.findById(orderId);
+        return orderRepository.findByOrderId(orderId);
     }
 
     public Order createOrder(Order order) {
@@ -32,12 +32,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public Order updateStatus(UUID orderId, OrderStatus status) {
-        return orderRepository.findById(orderId)
-                .map(order -> {
-                    order.setStatus(status);
-                    return orderRepository.save(order);
-                })
-                .orElse(null);
+        Order order = orderRepository.findByOrderId(orderId).orElse(null);
+
+        if (order != null) {
+            order.setStatus(status);
+            return orderRepository.save(order);
+        }
+
+        return null;
     }
 
     public void deleteOrder(UUID orderId) {

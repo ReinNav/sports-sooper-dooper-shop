@@ -19,8 +19,9 @@ import java.util.UUID;
 public class Order {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID orderId;
-    private String userId;
+    private UUID userId;
     private String date;
 
     @ElementCollection
@@ -37,5 +38,7 @@ public class Order {
     private ContactDetails contactDetails;
 
     private OrderStatus status;
+
+    private ShipmentType shipmentType;
 
 }

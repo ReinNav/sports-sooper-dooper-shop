@@ -2,8 +2,8 @@ package com.orderService.port.user.controller;
 
 import com.orderService.core.domain.model.Order;
 import com.orderService.core.domain.model.OrderStatus;
+import com.orderService.core.domain.model.ShipmentType;
 import com.orderService.core.domain.service.impl.OrderServiceImpl;
-import com.orderService.core.domain.service.interfaces.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,32 +25,33 @@ public class OrderControllerTest {
     @Mock
     private OrderServiceImpl orderService;
 
-    @Mock
-    private OrderRepository orderRepository;
-
     @InjectMocks
     private OrderController orderController;
 
     private Order order;
 
+    private UUID userId = UUID.randomUUID();
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        userId = UUID.randomUUID();
         order = new Order();
         order.setOrderId(UUID.randomUUID());
-        order.setUserId("user1");
+        order.setUserId(userId);
         order.setDate("2023-07-13");
         order.setOrderItems(Collections.emptyList());
+        order.setShipmentType(ShipmentType.DHL);
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);
     }
 
     @Test
     void testGetAllOrders() {
-        when(orderService.getAllOrders()).thenReturn(List.of(order));
-        List<Order> orders = orderController.getAllOrders();
+        when(orderService.getOrdersByUserId(userId)).thenReturn(List.of(order));
+        List<Order> orders = orderController.getAllOrders(userId);
         assertFalse(orders.isEmpty());
-        verify(orderService, times(1)).getAllOrders();
+        verify(orderService, times(1)).getOrdersByUserId(userId);
     }
 
     @Test

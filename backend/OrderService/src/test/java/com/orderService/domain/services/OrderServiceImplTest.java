@@ -1,15 +1,15 @@
 package com.orderService.domain.services;
+
 import com.orderService.core.domain.model.Order;
 import com.orderService.core.domain.model.OrderStatus;
+import com.orderService.core.domain.model.ShipmentType;
 import com.orderService.core.domain.service.impl.OrderServiceImpl;
 import com.orderService.core.domain.service.interfaces.OrderRepository;
-import com.orderService.core.domain.service.interfaces.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.util.Collections;
@@ -35,8 +35,9 @@ public class OrderServiceImplTest {
         MockitoAnnotations.openMocks(this);
         order = new Order();
         order.setOrderId(UUID.randomUUID());
-        order.setUserId("user1");
+        order.setUserId(UUID.randomUUID());
         order.setDate("2023-07-13");
+        order.setShipmentType(ShipmentType.DHL);
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);
@@ -44,20 +45,21 @@ public class OrderServiceImplTest {
 
     @Test
     void testGetAllOrders() {
-        when(orderRepository.findAll()).thenReturn(List.of(order));
-        List<Order> orders = orderService.getAllOrders();
+        UUID userId = order.getUserId();
+        when(orderRepository.findByUserId(userId)).thenReturn(List.of(order));
+        List<Order> orders = orderService.getOrdersByUserId(userId);
         assertFalse(orders.isEmpty());
-        verify(orderRepository, times(1)).findAll();
+        verify(orderRepository, times(1)).findByUserId(userId);
     }
 
     @Test
     void testGetOrderById() {
         UUID orderId = order.getOrderId();
-        when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
+        when(orderRepository.findByOrderId(orderId)).thenReturn(Optional.of(order));
         Optional<Order> foundOrder = orderService.getOrderById(orderId);
         assertTrue(foundOrder.isPresent());
         assertEquals(orderId, foundOrder.get().getOrderId());
-        verify(orderRepository, times(1)).findById(orderId);
+        verify(orderRepository, times(1)).findByOrderId(orderId);
     }
 
     @Test
@@ -72,12 +74,12 @@ public class OrderServiceImplTest {
     @Test
     void testUpdateStatus() {
         UUID orderId = order.getOrderId();
-        when(orderRepository.findById(orderId)).thenReturn(Optional.of(order));
+        when(orderRepository.findByOrderId(orderId)).thenReturn(Optional.of(order));
         when(orderRepository.save(any(Order.class))).thenReturn(order);
         Order updatedOrder = orderService.updateStatus(orderId, OrderStatus.CONFIRMED);
         assertNotNull(updatedOrder);
         assertEquals(OrderStatus.CONFIRMED, updatedOrder.getStatus());
-        verify(orderRepository, times(1)).findById(orderId);
+        verify(orderRepository, times(1)).findByOrderId(orderId);
         verify(orderRepository, times(1)).save(order);
     }
 

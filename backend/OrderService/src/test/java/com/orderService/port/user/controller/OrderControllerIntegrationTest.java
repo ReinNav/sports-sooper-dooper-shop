@@ -3,6 +3,7 @@ package com.orderService.port.user.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.orderService.core.domain.model.Order;
 import com.orderService.core.domain.model.OrderStatus;
+import com.orderService.core.domain.model.ShipmentType;
 import com.orderService.core.domain.service.interfaces.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ import org.testcontainers.utility.DockerImageName;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.UUID;
 
 import static java.time.temporal.ChronoUnit.SECONDS;
@@ -90,67 +92,82 @@ public class OrderControllerIntegrationTest {
     @Test
     void testCreateOrder() throws Exception {
         Order order = new Order();
-        order.setUserId("user1");
+        order.setUserId(UUID.randomUUID());
         order.setDate("2023-07-13");
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
+        order.setShipmentType(ShipmentType.DHL);
         order.setStatus(OrderStatus.PENDING);
 
         mockMvc.perform(post("/order")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(order)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").value("user1"))
+                .andExpect(jsonPath("$.userId").value(order.getUserId().toString()))
                 .andExpect(jsonPath("$.status").value("PENDING"));
     }
 
     @Test
     void testGetAllOrders() throws Exception {
+        UUID userId = UUID.randomUUID();
         Order order = new Order();
-        order.setOrderId(UUID.randomUUID());
-        order.setUserId("user1");
+        order.setUserId(userId);
         order.setDate("2023-07-13");
+        order.setShipmentType(ShipmentType.DHL);
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);
         orderRepository.save(order);
 
-        mockMvc.perform(get("/order"))
+        Optional<Order> savedOrder = orderRepository.findByOrderId(order.getOrderId());
+        assert savedOrder.isPresent() : "Order not saved correctly";
+
+        mockMvc.perform(get("/order")
+                        .param("userId", userId.toString()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].userId").value("user1"))
+                .andExpect(jsonPath("$[0].userId").value(userId.toString()))
                 .andExpect(jsonPath("$[0].status").value("PENDING"));
     }
 
     @Test
     void testGetOrderById() throws Exception {
+        UUID userId = UUID.randomUUID();
         Order order = new Order();
-        order.setOrderId(UUID.randomUUID());
-        order.setUserId("user1");
+        order.setUserId(userId);
         order.setDate("2023-07-13");
+        order.setShipmentType(ShipmentType.DHL);
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);
-        orderRepository.save(order);
+        order = orderRepository.save(order);
+
+        Optional<Order> savedOrder = orderRepository.findByOrderId(order.getOrderId());
+        assert savedOrder.isPresent() : "Order not saved correctly";
 
         mockMvc.perform(get("/order/" + order.getOrderId()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.userId").value("user1"))
+                .andExpect(jsonPath("$.userId").value(userId.toString()))
                 .andExpect(jsonPath("$.status").value("PENDING"));
     }
 
     @Test
     void testCancelOrder() throws Exception {
+        UUID userId = UUID.randomUUID();
         Order order = new Order();
-        order.setOrderId(UUID.randomUUID());
-        order.setUserId("user1");
+        order.setUserId(userId);
+        order.setShipmentType(ShipmentType.DHL);
         order.setDate("2023-07-13");
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);
-        orderRepository.save(order);
+        order = orderRepository.save(order);
+
+        Optional<Order> savedOrder = orderRepository.findByOrderId(order.getOrderId());
+        assert savedOrder.isPresent() : "Order not saved correctly";
 
         mockMvc.perform(put("/order/" + order.getOrderId() + "/cancel"))
                 .andExpect(status().isOk())
+                .andDo(result -> System.out.println(result.getResponse().getContentAsString()))
                 .andExpect(jsonPath("$.status").value("CANCELLED"));
     }
 }

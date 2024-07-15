@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  database-email:
+    image: postgres:16
+    container_name: postgres_email
+    volumes:
+      - ./:/app/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: email
+    ports:
+      - "5436:5432"
+    networks:
+      - shared-network
+
+  app:
+    container_name: EmailService
+    command: java -jar target/EmailService-1.0.0.jar
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - database-email
+    env_file:
+      - .env
+    volumes:
+      - ./:/app/app
+    ports:
+     - "1238:1238"
+    networks:
+      - shared-network
+    environment:
+      - spring_rabbitmq_host=rabbitmq-container
+      - spring_rabbitmq_port=5672
+      - spring_rabbitmq_username=user
+      - spring_rabbitmq_password=password
+      - spring.datasource.url=jdbc:postgresql://database-email:5432/email
+      - spring.security.oauth2.resourceserver.jwt.issuer-uri=http://keycloak:8080/realms/ssds
+
+networks:
+  shared-network:
+    external: true

@@ -19,8 +19,8 @@ public class OrderController {
     private OrderServiceImpl orderService;
 
     @GetMapping
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
+    public List<Order> getAllOrders(@RequestParam UUID userId) {
+        return orderService.getOrdersByUserId(userId);
     }
 
     @GetMapping("/{orderId}")

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Typography, List } from 'antd';
-import ProductsApi from './ProductsApi';
+import ProductsApi from './Api/ProductsApi';
 import '../Home.css';
 
 const { Title } = Typography;
@@ -20,10 +20,6 @@ function Home() {
         handleProducts();
     }, []);
 
-    const handleClickSearch = () => {
-        console.log('Search button clicked');
-    };
-
     const handleClickFootball = () => {
         console.log('Football button clicked');
     };
@@ -34,23 +30,6 @@ function Home() {
 
     return (
         <div className="home-container">
-            <div className="search-bar">
-                <input
-                    type="text"
-                    placeholder="Suche..."
-                />
-                <button className="search-button" onClick={handleClickSearch}>Suchen</button>
-            </div>
-            <header>
-                <nav className="navbar">
-                    <a href="#">OBERTEILE</a>
-                    <a href="#">HOSEN</a>
-                    <a href="#">SCHUHE</a>
-                    <a href="#">EQUIPMENT</a>
-                    <a href="#">LIFESTYLE</a>
-                    <a href="#">MEHR</a>
-                </nav>
-            </header>
             <section className="hero-section">
                 <div className="hero-banner1">
                     <div className="hero-text">

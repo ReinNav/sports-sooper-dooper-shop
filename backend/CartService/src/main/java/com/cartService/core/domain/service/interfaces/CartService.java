@@ -13,7 +13,7 @@ public interface CartService {
 
     Cart subtractFromCart(UUID userId, CartItem cartItem, int quantity) throws CartItemNotFound;
 
-    Map.Entry<CartItem, Integer> removeFromCart(UUID userId, UUID productId) throws CartItemNotFound;
+    CartItem removeFromCart(UUID userId, UUID productId) throws CartItemNotFound;
 
     Cart clearCart(UUID userId);
 }

@@ -36,6 +36,7 @@ public class CartItemServiceTest {
         cartItem.setGender("Female");
         cartItem.setSize("M");
         cartItem.setColour("Red");
+        cartItem.setQuantity(1);
     }
 
     @Test

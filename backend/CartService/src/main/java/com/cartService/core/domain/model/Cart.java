@@ -1,12 +1,9 @@
 package com.cartService.core.domain.model;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -22,11 +19,10 @@ public class Cart {
 
     private UUID userId;
 
-    @ElementCollection
-    @CollectionTable(name = "CART_ITEMS", joinColumns = @JoinColumn(name = "cart_id"))
-    @MapKeyJoinColumn(name = "cart_item_id")
-    @Column(name = "quantity")
-    private Map<CartItem, Integer> cartItems = new HashMap<>();
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "cart_id")
+    @OrderColumn
+    private List<CartItem> cartItems;
 
     @Getter
     private float totalPrice;
@@ -39,21 +35,15 @@ public class Cart {
         updateTotalNumberOfItems();
     }
 
-    /**
-     * Updates the total price of the cart based on the items and their quantities.
-     */
     private void updateTotalPrice() {
-        this.totalPrice = (float) cartItems.entrySet().stream()
-                .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())
+        this.totalPrice = (float) cartItems.stream()
+                .mapToDouble(item -> item.getPrice() * item.getQuantity())
                 .sum();
     }
 
-
-
-    /**
-     * Updates the total number of items in the cart.
-     */
     private void updateTotalNumberOfItems() {
-        this.totalNumberOfItems = cartItems.values().stream().mapToInt(Integer::intValue).sum();
+        this.totalNumberOfItems = cartItems.stream()
+                .mapToInt(CartItem::getQuantity)
+                .sum();
     }
 }

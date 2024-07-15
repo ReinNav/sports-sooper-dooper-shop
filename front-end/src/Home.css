@@ -4,24 +4,6 @@
     text-align: center;
 }
 
-.navbar {
-    background-color: #312d2d;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-}
-
-.navbar a {
-    margin-top: 10px;
-    margin-left: 30px;
-    margin-right: 30px;
-    margin-bottom: 10px;
-    color: white;
-    font-weight: bold;
-    text-decoration: none;
-}
-
 .hero-section {
     display: flex;
     overflow: hidden;
@@ -96,23 +78,6 @@
     background-color: #333;
     color: white;
     padding: 20px;
-}
-
-.search-bar {
-    padding-top: 2px;
-    padding-bottom: 2px;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.search-button {
-    background-color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 16px;
 }
 
 .products-section .product-list {

@@ -10,7 +10,6 @@ import com.cartService.port.user.producer.CartProducer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -55,15 +54,15 @@ public class CartController {
 
     @PostMapping("/remove")
     public Cart removeFromCart(@RequestParam UUID userId, @RequestParam UUID productId) throws CartItemNotFound {
-        Map.Entry<CartItem, Integer> removedFromCart = cartService.removeFromCart(userId, productId);
-        cartProducer.changeProductAmount(removedFromCart.getKey(), removedFromCart.getValue());
+        CartItem removedFromCart = cartService.removeFromCart(userId, productId);
+        cartProducer.changeProductAmount(removedFromCart, removedFromCart.getQuantity());
         return getCart(userId);
     }
 
     @PostMapping("/clear")
     public Cart clearCart(@RequestParam UUID userId) {
         Cart cart = cartService.getCart(userId);
-        cart.getCartItems().entrySet().forEach(entry -> cartProducer.changeProductAmount(entry.getKey(), entry.getValue()));
+        cart.getCartItems().forEach(item -> cartProducer.changeProductAmount(item, item.getQuantity()));
         return cartService.clearCart(userId);
     }
 }

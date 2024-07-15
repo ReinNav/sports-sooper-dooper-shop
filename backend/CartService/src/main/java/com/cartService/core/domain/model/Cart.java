@@ -21,6 +21,7 @@ public class Cart {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "cart_id")
+    @OrderColumn
     private List<CartItem> cartItems;
 
     @Getter

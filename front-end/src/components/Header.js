@@ -1,16 +1,22 @@
+// Header.js
 import React, { useEffect, useState } from 'react';
 import { useAuth } from "react-oidc-context";
 import { ShoppingCartOutlined } from '@ant-design/icons';
+import { useCart } from './CartContext';
 import '../App.css';
 import '../Header.css';
 
 function Header() {
     const auth = useAuth();
     const [user, setUser] = useState(null);
+    const { cartCount, fetchCart } = useCart(); 
 
     useEffect(() => {
         setUser(auth.user);
-    }, [auth.user]);
+        if (auth.isAuthenticated) {
+            fetchCart(auth.user.profile.sub);
+        }
+    }, [auth.user, auth.isAuthenticated, fetchCart]);
 
     const handleLogout = () => {
         auth.signoutRedirect({
@@ -43,24 +49,29 @@ function Header() {
                     <a href="#" className="nav-link">HOSEN</a>
                     <a href="#" className="nav-link">SCHUHE</a>
                 </nav>
-                <div className="search-bar">
-                    <input
-                        type="text"
-                        placeholder="Suche..."
-                    />
-                    <button className="search-button" onClick={handleClickSearch}>Suchen</button>
-                </div>
-                <ShoppingCartOutlined className='cart-icon' onClick={() => (handleCartClick())} />
-                <div className="auth-buttons">
-                    {user ? (
-                        <button className="auth-button logout-button" onClick={handleLogout}>
-                            Logout
-                        </button>
-                    ) : (
-                        <button className="auth-button login-button" onClick={handleLogin}>
-                            Login
-                        </button>
-                    )}
+                <div className='flex-row header-second-half'>
+                    <div className="search-bar">
+                        <input
+                            type="text"
+                            placeholder="Suche..."
+                        />
+                        <button className="search-button" onClick={handleClickSearch}>Suchen</button>
+                    </div>
+                    <div className="cart-icon-container">
+                        {cartCount > 0 && <span className='badge badge-warning' id='lblCartCount'>{cartCount}</span>}
+                        <ShoppingCartOutlined className='cart-icon' onClick={handleCartClick} />
+                    </div>
+                    <div className="auth-buttons">
+                        {user ? (
+                            <button className="auth-button logout-button" onClick={handleLogout}>
+                                Logout
+                            </button>
+                        ) : (
+                            <button className="auth-button login-button" onClick={handleLogin}>
+                                Login
+                            </button>
+                        )}
+                    </div>
                 </div>
             </div>
         </header>

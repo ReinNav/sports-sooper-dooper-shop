@@ -89,6 +89,7 @@ public class CartServiceImpl implements CartService {
         if (itemToRemove.isPresent()) {
             cart.getCartItems().remove(itemToRemove.get());
             cart.calculateTotalPriceAndItems();
+
             cartRepository.save(cart);
             return itemToRemove.get();
         } else {

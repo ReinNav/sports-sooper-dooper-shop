@@ -1,17 +1,21 @@
 variables:
-  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/backend/ProductService/.m2/repository"
   PRODUCT_SERVICE_DIR: backend/ProductService
+  DOCKER_HOST: "tcp://docker:2375/"
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+
+services:
+  - docker:20.10.9-dind
 
 build_product_service:
   stage: build
   image: maven:3.9.8-eclipse-temurin-17
-  tags:
-    - gitlab-org
   before_script:
     - cd $PRODUCT_SERVICE_DIR
   script:
     - echo "Building Product Service"
-    - mvn clean install -B
+    - mvn clean install -B -DskipTests
   artifacts:
     paths:
       - $PRODUCT_SERVICE_DIR/target/*.jar
@@ -19,8 +23,6 @@ build_product_service:
 test_product_service:
   stage: test
   image: maven:3.9.8-eclipse-temurin-17
-  tags:
-    - gitlab-org
   before_script:
     - cd $PRODUCT_SERVICE_DIR
   script:

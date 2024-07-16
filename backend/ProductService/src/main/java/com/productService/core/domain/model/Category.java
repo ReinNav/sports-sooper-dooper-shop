@@ -1,7 +1,7 @@
 package com.productService.core.domain.model;
 
 public enum Category {
-    FOOTWEAR,
-    TOPS,
-    BOTTOMS
+    OBERTEILE,
+    HOSEN,
+    SCHUHE
 }

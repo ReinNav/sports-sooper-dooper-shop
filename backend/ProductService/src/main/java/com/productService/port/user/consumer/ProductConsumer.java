@@ -20,12 +20,6 @@ public class ProductConsumer {
     @Autowired
     private ProductService productService;
 
-    @RabbitListener(queues = {"product"})
-    public void consume(String message) {
-        LOGGER.info(String.format("Received message -> %s", message));
-        // Handle message appropriately
-    }
-
     @RabbitListener(queues = {"cart_update"})
     public void handleProductQuantityChange(String message) {
         try {
@@ -35,7 +29,7 @@ public class ProductConsumer {
             UUID productId = productQuantityChangeDTO.getProductId();
             int quantityChange = productQuantityChangeDTO.getDifference();
 
-            Product product = productService.getProductById(productId);
+            Product product = productService.getProduct(productId);
             if (product != null) {
                 int newAmount = product.getAmount() + quantityChange;
                 product.setAmount(newAmount);

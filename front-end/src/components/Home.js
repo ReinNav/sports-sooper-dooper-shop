@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, List } from 'antd';
+import { Link } from 'react-router-dom';
+import { Typography } from 'antd';
 import ProductsApi from './Api/ProductsApi';
 import '../Home.css';
 
@@ -48,20 +49,21 @@ function Home() {
             </section>
             <section className="products-section">
                 <div style={{padding: '20px'}}>
-                    <Title level={2}>Product Highlights</Title>
+                    <Title id='list-title' level={1}>Unsere Produkte</Title>
                     {products.length > 0 ? (
                         <div className="product-list">
                             {products.map((product, index) => (
-                                <div className="product-item" key={index}>
-                                    <img src={product.foto} alt={product.name} className="product-image"/>
+                                <Link to={`/productdetail/${product.id}`} className="product-item" key={index}>
+                                    <img src={product.imageLink} alt={product.name} className="product-image"/>
+                                    <div className='flex-column product-detail-wrapper'>
                                     <h3>{product.name}</h3>
-                                    <p>{product.description}</p>
-                                    <p>{product.price} €</p>
-                                </div>
+                                    <p id='price'>{product.price.toFixed(2).replace('.', ',')} €</p>
+                                    </div>
+                                </Link>
                             ))}
                         </div>
                     ) : (
-                        <div>No products yet!</div>
+                        <div>Keine Produkte noch!</div>
                     )}
                 </div>
             </section>

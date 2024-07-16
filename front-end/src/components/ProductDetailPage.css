@@ -6,13 +6,13 @@ body {
 
 .container {
   display: flex;
-  flex-wrap: wrap; /* Zeilenumbruch bei Bedarf */
-  margin: 20px;
+  margin: auto;
+  padding: 90px;
 }
 
-.product-image {
-  width: 60%;
-  height: 400px;
+.product-detail-image {
+  width: 500px;
+  height: 500px;
   border: 1px solid #ccc;
   margin-right: 20px;
   background-color: #f7f7f7;
@@ -21,14 +21,13 @@ body {
   align-items: center;
 }
 
-.product-image img {
-  max-width: 100%;
-  max-height: 100%;
+.product-detail-image img {
+  width: 400px;
+  height: 400px;
 }
 
 .product-details {
-  width: calc(40% - 20px); /* 40% der Breite des Containers abzüglich des Abstands zum Bild */
-  margin-top: 20px; /* Abstand zur Produktbeschreibung */
+  width: 500px;
 }
 
 .product-details h1 {
@@ -65,7 +64,8 @@ body {
   margin-right: 5px;
   padding: 5px 10px;
   border: 1px solid #ccc;
-  background-color: #fff;
+  background-color: black;
+  color: white;
   cursor: pointer;
 }
 
@@ -76,13 +76,19 @@ body {
 .add-to-cart {
   padding: 10px;
   margin: 10px 0;
-  border: 1px solid #ccc;
-  background-color: #fff;
+  background-color: black;
+  color: white;
   cursor: pointer;
+  transition: all 0.1s;
 }
 
 .add-to-cart:hover {
-  background-color: #eee;
+  opacity: 0.8;
+}
+
+.add-to-cart:disabled {
+  background-color: #7b7b7b;
+  cursor: not-allowed;
 }
 
 .wishlist {
@@ -100,4 +106,60 @@ body {
 .product-description {
   width: 100%; /* Volle Breite innerhalb des Containers */
   margin-top: 20px; /* Abstand nach oben */
+}
+
+.inner-container {
+  padding: 20px;
+  background-color: #fff;
+  width: 900px;
+  margin: auto;
+}
+
+.first-row {
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+}
+
+.color-size-detail {
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.product-detail-buttons {
+  margin-top: 50px;
+}
+
+
+.product-detail-plus-minus-container {
+  height: 40px;
+  display: flex;
+  font-size: 20px;
+  border: solid 1px #ccc;
+  padding: 5px 10px;
+  justify-content: space-between;
+}
+
+.product-detail-plus-minus-container button {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-primary-button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.modal-primary-button:hover {
+  background-color: black !important;
+  opacity: 0.8;
 }

@@ -52,6 +52,7 @@ function Header() {
                     <a href="#" className="nav-link">OBERTEILE</a>
                     <a href="#" className="nav-link">HOSEN</a>
                     <a href="#" className="nav-link">SCHUHE</a>
+                    <a href="/products" className="nav-link">MEHR</a>
                 </nav>
                 <div className='flex-row header-second-half'>
                     <div className="search-bar">

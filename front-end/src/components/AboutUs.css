@@ -1,0 +1,48 @@
+/* AboutUs.css */
+
+/* Stil für den gesamten About Us Bereich */
+.page-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Zentriert Inhalte horizontal */
+  justify-content: center; /* Zentriert Inhalte vertikal */
+  text-align: center; /* Zentriert den Text */
+  min-height: 100vh; /* Stellt sicher, dass der Container mindestens so hoch wie der Viewport ist */
+  padding: 20px; /* Fügt einen Innenabstand hinzu */
+  background-color: #f9f9f9; /* Heller Hintergrund für Kontrast */
+  color: #333; /* Dunklere Textfarbe für bessere Lesbarkeit */
+  font-family: 'Helvetica Neue', Arial, sans-serif; /* Moderne, gut lesbare Schriftart */
+  line-height: 1.6; /* Erhöht den Zeilenabstand für bessere Lesbarkeit */
+}
+
+/* Stil für Überschriften innerhalb von About Us */
+.page-content h1 {
+  margin: 10px 0; /* Fügt oben und unten einen Abstand hinzu */
+  font-size: 2.5em; /* Größere Schriftgröße für Überschriften */
+  color: #2c3e50; /* Dunklere Farbe für Überschriften */
+  text-transform: uppercase; /* Großbuchstaben für Überschriften */
+  letter-spacing: 1px; /* Abstand zwischen Buchstaben */
+}
+
+/* Stil für Absätze innerhalb von About Us */
+.page-content p {
+  max-width: 600px; /* Begrenzt die Breite des Textes */
+  margin: 0 auto 20px; /* Zentriert den Absatz horizontal und fügt unten einen Abstand hinzu */
+  font-size: 1.1em; /* Etwas größere Schriftgröße für bessere Lesbarkeit */
+  color: #555; /* Leicht dunklere Textfarbe */
+  background: #fff; /* Weißer Hintergrund für den Text */
+  padding: 15px; /* Innenabstand für Absätze */
+  border-radius: 8px; /* Abgerundete Ecken */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sanfter Schatten für eine ansprechende Optik */
+}
+
+/* Stil für den Container des About Us Bereichs */
+.page-content-container {
+  width: 90%; /* Breite auf 90% des Viewports setzen */
+  max-width: 1200px; /* Maximalbreite für große Bildschirme */
+  margin: 0 auto; /* Zentriert den Container horizontal */
+  padding: 20px; /* Innenabstand */
+  background: #ecf0f1; /* Hellerer Hintergrund */
+  border-radius: 10px; /* Abgerundete Ecken */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sanfter Schatten für eine ansprechende Optik */
+}

@@ -1,0 +1,32 @@
+
+.Contact {
+    text-align: center;
+  }
+  
+  .Contact-info {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #282c34; /* Farbe ähnlich App-header */
+    border-radius: 5px;
+  }
+  
+  .Contact-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .Contact-submit {
+    background-color: #282c34; /* Farbe ähnlich App-header */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .Contact-submit:hover {
+    background-color: #3a3f47; /* Dunklere Farbe für Hover-Effekt */
+  }

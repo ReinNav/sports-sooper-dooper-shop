@@ -9,12 +9,15 @@ import TermsOfService from './components/TermsOfService';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Contact from './components/Contact';
 import ProductDetailPage from './components/ProductDetailPage';
+import Checkout from './components/Checkout';
+import CapturePayment from './components/CapturePayment';
 
 const AppRoutes = () => (
     
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/success" element={<Home />} />
       <Route path="/secured" element={<PrivateRoute><SecuredPage /></PrivateRoute>} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/about" element={<AboutUs/>} />
@@ -22,6 +25,8 @@ const AppRoutes = () => (
       <Route path="/privacy" element={<PrivacyPolicy />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="productdetail" element={<ProductDetailPage />} />
+      <Route path="/checkout" element={<Checkout />} />
+      <Route path="/capture" element={<CapturePayment />} />
     </Routes>
     </BrowserRouter>
 

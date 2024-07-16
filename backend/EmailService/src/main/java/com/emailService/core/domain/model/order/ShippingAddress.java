@@ -12,7 +12,7 @@ import java.util.UUID;
 public class ShippingAddress {
 
     private UUID addressId;
-    private String userId; // for getting saved addresses
+    private UUID userId; // for getting saved addresses
     private String firstName;
     private String lastName;
     private String street;

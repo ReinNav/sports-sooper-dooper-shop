@@ -10,5 +10,6 @@ import java.util.UUID;
 public class PaymentCompletedDTO {
     private String paymentId;
     private UUID orderId;
+    private UUID userId;
     private String status;
 }

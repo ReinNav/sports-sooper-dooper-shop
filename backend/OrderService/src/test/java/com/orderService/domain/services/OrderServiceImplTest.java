@@ -37,7 +37,7 @@ public class OrderServiceImplTest {
         order.setOrderId(UUID.randomUUID());
         order.setUserId(UUID.randomUUID());
         order.setDate("2023-07-13");
-        order.setShipmentType(ShipmentType.DHL);
+        order.setShipmentType(ShipmentType.STANDARD);
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);

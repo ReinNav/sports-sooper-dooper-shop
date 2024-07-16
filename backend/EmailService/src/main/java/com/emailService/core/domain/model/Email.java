@@ -27,7 +27,7 @@ public class Email {
 
     private String recipientEmail;
 
-    private String recipientUserId;
+    private UUID recipientUserId;
 
     private LocalDateTime dateSent;
 

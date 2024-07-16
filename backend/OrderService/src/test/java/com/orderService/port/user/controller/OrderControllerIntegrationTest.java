@@ -96,7 +96,7 @@ public class OrderControllerIntegrationTest {
         order.setDate("2023-07-13");
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
-        order.setShipmentType(ShipmentType.DHL);
+        order.setShipmentType(ShipmentType.STANDARD);
         order.setStatus(OrderStatus.PENDING);
 
         mockMvc.perform(post("/order")
@@ -113,7 +113,7 @@ public class OrderControllerIntegrationTest {
         Order order = new Order();
         order.setUserId(userId);
         order.setDate("2023-07-13");
-        order.setShipmentType(ShipmentType.DHL);
+        order.setShipmentType(ShipmentType.STANDARD);
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);
@@ -135,7 +135,7 @@ public class OrderControllerIntegrationTest {
         Order order = new Order();
         order.setUserId(userId);
         order.setDate("2023-07-13");
-        order.setShipmentType(ShipmentType.DHL);
+        order.setShipmentType(ShipmentType.STANDARD);
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);
@@ -155,7 +155,7 @@ public class OrderControllerIntegrationTest {
         UUID userId = UUID.randomUUID();
         Order order = new Order();
         order.setUserId(userId);
-        order.setShipmentType(ShipmentType.DHL);
+        order.setShipmentType(ShipmentType.STANDARD);
         order.setDate("2023-07-13");
         order.setOrderItems(Collections.emptyList());
         order.setTotalAmount(BigDecimal.valueOf(100));

@@ -15,20 +15,18 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.ITemplateEngine;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.UUID;
 
 @Service
 public class EmailServiceImpl implements EmailService {
 
     private static final String TEMPLATE_NAME = "order-confirmation";
-    private static final String LOGO_IMAGE = "images/logo.png"; // Corrected path
-    private static final String PNG_MIME = "image/png";
     private static final String MAIL_SUBJECT = "Order Confirmation";
 
     @Autowired
@@ -56,20 +54,16 @@ public class EmailServiceImpl implements EmailService {
 
         final Context ctx = new Context(Locale.getDefault());
         ctx.setVariable("order", order);
-        ctx.setVariable("logo", LOGO_IMAGE);
 
         final String htmlContent = htmlTemplateEngine.process(TEMPLATE_NAME, ctx);
         email.setText(htmlContent, true);
-
-        ClassPathResource clr = new ClassPathResource(LOGO_IMAGE);
-        email.addInline("logo", clr, PNG_MIME);
 
         mailSender.send(mimeMessage);
 
         saveEmail(order.getContactDetails().getContactEmail(), order.getUserId(), EmailType.ORDER_CONFIRMATION);
     }
 
-    private void saveEmail(String recipientEmail, String recipientUserId, EmailType emailType) {
+    private void saveEmail(String recipientEmail, UUID recipientUserId, EmailType emailType) {
         Email email = new Email();
         email.setRecipientEmail(recipientEmail);
         email.setRecipientUserId(recipientUserId);

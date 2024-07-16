@@ -24,7 +24,7 @@ public class Order {
     private UUID userId;
     private String date;
 
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
     private List<OrderItem> orderItems;
     private BigDecimal totalAmount;
 

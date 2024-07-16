@@ -8,6 +8,7 @@ import com.cartService.core.domain.service.interfaces.CartRepository;
 import com.cartService.core.domain.service.interfaces.CartService;
 import com.cartService.core.domain.service.interfaces.CartItemService;
 import com.cartService.port.user.producer.CartProducer;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -98,6 +99,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
+    @Transactional
     public Cart clearCart(UUID userId) {
         Cart cart = getCart(userId);
         cart.getCartItems().clear();

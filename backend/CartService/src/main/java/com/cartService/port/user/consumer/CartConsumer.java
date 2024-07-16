@@ -11,6 +11,7 @@ import com.cartService.port.dto.mapper.ProductCartMapper;
 import com.cartService.port.user.producer.CartProducer;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -53,6 +54,7 @@ public class CartConsumer {
     }
 
     @RabbitListener(queues = {"payment_finished"})
+    @Transactional
     public void clearCartAfterSuccessPayment(String message) throws CartItemNotFound {
         LOGGER.info("Received message -> {}", message);
         try {

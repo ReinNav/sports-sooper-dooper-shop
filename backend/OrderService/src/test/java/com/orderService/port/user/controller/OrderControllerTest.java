@@ -41,7 +41,7 @@ public class OrderControllerTest {
         order.setUserId(userId);
         order.setDate("2023-07-13");
         order.setOrderItems(Collections.emptyList());
-        order.setShipmentType(ShipmentType.DHL);
+        order.setShipmentType(ShipmentType.STANDARD);
         order.setTotalAmount(BigDecimal.valueOf(100));
         order.setStatus(OrderStatus.PENDING);
     }

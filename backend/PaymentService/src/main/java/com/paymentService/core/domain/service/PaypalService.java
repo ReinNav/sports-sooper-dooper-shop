@@ -28,8 +28,8 @@ public class PaypalService {
         PurchaseUnitRequest purchaseUnitRequest = new PurchaseUnitRequest().amountWithBreakdown(amountBreakdown);
         orderRequest.purchaseUnits(List.of(purchaseUnitRequest));
         ApplicationContext applicationContext = new ApplicationContext()
-                .returnUrl("https://localhost:3000/capture")
-                .cancelUrl("https://localhost:3000/cancel");
+                .returnUrl("http://localhost:3000/capture")
+                .cancelUrl("http://localhost:3000/cancel");
         orderRequest.applicationContext(applicationContext);
         OrdersCreateRequest ordersCreateRequest = new OrdersCreateRequest().requestBody(orderRequest);
 
@@ -52,9 +52,9 @@ public class PaypalService {
 
 
     public CompletedOrder completePayment(String token) {
-        OrdersCaptureRequest ordersCaptureRequest = new OrdersCaptureRequest(token);
+        OrdersGetRequest request = new OrdersGetRequest(token);
         try {
-            HttpResponse<Order> httpResponse = payPalHttpClient.execute(ordersCaptureRequest);
+            HttpResponse<Order> httpResponse = payPalHttpClient.execute(request);
             if (httpResponse.result().status() != null) {
                 return new CompletedOrder("success", token);
             }

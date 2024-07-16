@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useAuth } from 'react-oidc-context';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { getCart, addToCart, subtractFromCart, removeFromCart, clearCart } from './Api/CartApi';
 import { useCart } from './CartContext'; 
 import '../Cart.css';
@@ -7,6 +8,7 @@ import '../Cart.css';
 const Cart = () => {
     const auth = useAuth();
     const { cart, setCart, updateCart } = useCart();
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const fetchCart = useCallback(async () => {
         try {
@@ -62,6 +64,10 @@ const Cart = () => {
         } catch (error) {
             console.error('Fehler beim Leeren des Warenkorbs', error);
         }
+    };
+
+    const handleCheckout = () => {
+        navigate('/checkout');
     };
 
     if (!cart) {
@@ -133,7 +139,7 @@ const Cart = () => {
                                     <p className='total'>{(cart.totalPrice + 4.99).toFixed(2).replace('.', ',') +" €"}</p>
                                 </div>
                             </div>
-                            <button className='checkout-button'>Zur Kasse</button>
+                            <button className='checkout-button' onClick={handleCheckout}>Zur Kasse</button>
                         </div>
                     </div>
                 )}

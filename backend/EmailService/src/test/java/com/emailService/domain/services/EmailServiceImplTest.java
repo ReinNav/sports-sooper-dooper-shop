@@ -14,7 +14,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.ITemplateEngine;
@@ -50,9 +49,11 @@ class EmailServiceImplTest {
     @Test
     void testSendOrderConfirmationEmail() throws MessagingException, UnsupportedEncodingException {
         // create sample order
+        UUID userId = UUID.randomUUID();
+
         Order order = new Order();
         order.setOrderId(UUID.randomUUID());
-        order.setUserId("sampleUserId");
+        order.setUserId(userId);
         order.setDate("2024-07-14");
         order.setTotalAmount(new BigDecimal("199.99"));
         order.setOrderItems(Collections.emptyList());
@@ -65,7 +66,6 @@ class EmailServiceImplTest {
 
         Context context = new Context(Locale.getDefault());
         context.setVariable("order", order);
-        context.setVariable("logo", "images/logo.png");
         when(htmlTemplateEngine.process(eq("order-confirmation"), any(Context.class))).thenReturn("htmlContent");
 
         // send email
@@ -81,7 +81,7 @@ class EmailServiceImplTest {
         // check if the email was saved correctly
         Email savedEmail = emailCaptor.getValue();
         assertEquals("customer@example.com", savedEmail.getRecipientEmail());
-        assertEquals("sampleUserId", savedEmail.getRecipientUserId());
+        assertEquals(userId, savedEmail.getRecipientUserId());
         assertEquals(EmailType.ORDER_CONFIRMATION, savedEmail.getEmailType());
         assertNotNull(savedEmail.getDateSent());
     }

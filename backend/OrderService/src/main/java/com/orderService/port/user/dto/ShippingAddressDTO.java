@@ -1,18 +1,16 @@
-package com.emailService.core.domain.model.order;
+package com.orderService.port.user.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-public class BillingAddress {
-
+public class ShippingAddressDTO {
     private UUID addressId;
-    private UUID userId; // for getting saved addresses
     private String firstName;
     private String lastName;
     private String street;

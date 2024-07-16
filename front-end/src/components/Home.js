@@ -51,7 +51,7 @@ function Home() {
                 <div style={{padding: '20px'}}>
                     <Title id='list-title' level={1}>Unsere Produkte</Title>
                     {products.length > 0 ? (
-                        <div className="product-list">
+                        <div className="product-grid">
                             {products.map((product, index) => (
                                 <Link to={`/product/${product.id}`} className="product-item" key={index}>
                                     <img src={product.imageLink} alt={product.name} className="product-image"/>

@@ -3,13 +3,15 @@
 }
 
 .filter-container {
-    padding: 20px;
-    margin-bottom: 20px;
+    padding: 16px;
+    padding-left: 26px;
     display: flex;
+    align-items: center;
     gap: 10px;
 }
 
 .product-grid {
+    padding-top: 16px;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 20px;
@@ -29,4 +31,18 @@
     height: auto;
     border-radius: 8px;
     margin-bottom: 10px;
+}
+
+.reset-filters-button {
+    margin-left: auto;
+    padding: 5px 10px;
+    background-color: transparent;
+    color: inherit;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.reset-filters-button:hover {
+    border: 1px solid #ccc;
 }

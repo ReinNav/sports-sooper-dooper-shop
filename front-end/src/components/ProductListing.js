@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import {useLocation, useNavigate} from "react-router-dom";
 import ProductsApi from './Api/ProductsApi';
 import '../ProductListing.css';
+
+const useQuery = () => {
+    return new URLSearchParams(useLocation().search);
+};
 
 const ProductListing = () => {
     const [products, setProducts] = useState([]);
@@ -14,6 +19,8 @@ const ProductListing = () => {
     const [sizes, setSizes] = useState([]);
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedPriceRange, setSelectedPriceRange] = useState('');
+    const query = useQuery();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleProducts = async () => {
@@ -29,12 +36,18 @@ const ProductListing = () => {
                 setGenders(uniqueGenders);
                 setColors(uniqueColors);
                 setSizes(uniqueSizes);
+
+                const categoryFromUrl = query.get('category');
+                if (categoryFromUrl) {
+                    setSelectedCategory(categoryFromUrl);
+                    navigate('/products', { replace: true });
+                }
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
         };
         handleProducts();
-    }, []);
+    }, [query, navigate]);
 
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
@@ -54,6 +67,10 @@ const ProductListing = () => {
 
     const handlePriceRangeChange = (event) => {
         setSelectedPriceRange(event.target.value);
+    };
+
+    const handleResetFilters = () => {
+        window.location.href = '/products';
     };
 
     useEffect(() => {
@@ -81,11 +98,12 @@ const ProductListing = () => {
         }
 
         setFilteredProducts(filtered);
-    }, [selectedCategory, selectedGender, selectedColor, selectedSize, selectedPriceRange, products]);
+    }, [selectedCategory, selectedGender, selectedColor, selectedSize, selectedPriceRange, products, query]);
 
     return (
         <div className="product-listing-container">
             <div className="filter-container">
+                <h2>Filter:</h2>
                 <select value={selectedCategory} onChange={handleCategoryChange}>
                     <option value="">Kategorie</option>
                     {categories.map((category, index) => (
@@ -119,12 +137,15 @@ const ProductListing = () => {
                     <option value="80-99">80 - 99 €</option>
                     <option value="100-9999">100 € und höher</option>
                 </select>
+                <button onClick={handleResetFilters} className="reset-filters-button">
+                    Alle Filter zurücksetzen
+                </button>
             </div>
             <div className="product-grid">
                 {filteredProducts.map((product, index) => (
                     <div className="product-item" key={index}>
-                        <img src={product.foto} alt={product.name} className="product-image" />
-                        <h3>{product.name}</h3>
+                        <img src={product.foto} alt={product.title} className="product-image" />
+                        <h3>{product.title}</h3>
                         <p>{product.description}</p>
                         <p>{product.price} €</p>
                     </div>

@@ -1,0 +1,165 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  margin: auto;
+  padding: 90px;
+}
+
+.product-detail-image {
+  width: 500px;
+  height: 500px;
+  border: 1px solid #ccc;
+  margin-right: 20px;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.product-detail-image img {
+  width: 400px;
+  height: 400px;
+}
+
+.product-details {
+  width: 500px;
+}
+
+.product-details h1 {
+  font-size: 24px;
+  margin: 0;
+}
+
+.rating {
+  font-size: 20px;
+  color: gold;
+  margin: 10px 0;
+}
+
+.price {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.options {
+  margin: 10px 0;
+}
+
+.option-group {
+  margin-bottom: 10px;
+}
+
+.option-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.option-buttons button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+.option-buttons button:hover {
+  background-color: #eee;
+}
+
+.add-to-cart {
+  padding: 10px;
+  margin: 10px 0;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.add-to-cart:hover {
+  opacity: 0.8;
+}
+
+.add-to-cart:disabled {
+  background-color: #7b7b7b;
+  cursor: not-allowed;
+}
+
+.wishlist {
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.wishlist:hover {
+  background-color: #eee;
+}
+
+/* Produktbeschreibung immer unter dem Bild */
+.product-description {
+  width: 100%; /* Volle Breite innerhalb des Containers */
+  margin-top: 20px; /* Abstand nach oben */
+}
+
+.inner-container {
+  padding: 20px;
+  background-color: #fff;
+  width: 900px;
+  margin: auto;
+}
+
+.first-row {
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+}
+
+.color-size-detail {
+  margin-top: 20px;
+  gap: 20px;
+}
+
+.product-detail-buttons {
+  margin-top: 50px;
+}
+
+
+.product-detail-plus-minus-container {
+  height: 40px;
+  display: flex;
+  font-size: 20px;
+  border: solid 1px #ccc;
+  padding: 5px 10px;
+  justify-content: space-between;
+}
+
+.product-detail-plus-minus-container button {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: none;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-primary-button {
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.modal-primary-button:hover {
+  background-color: black !important;
+  opacity: 0.8;
+}

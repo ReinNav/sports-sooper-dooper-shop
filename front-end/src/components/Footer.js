@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../components/Footer.css';
+import '../styles/Footer.css';
 
 const Footer = () => {
   return (
@@ -15,6 +15,7 @@ const Footer = () => {
             <li><a href="/terms">Nutzungsbedingungen</a></li>
           </ul>
         </nav>
+        <p className='copyright'>&copy; 2024 Sport Super Dooper Store. Alle Rechte vorbehalten.</p>
       </div>
     </footer>
   );

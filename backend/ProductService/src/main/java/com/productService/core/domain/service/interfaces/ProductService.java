@@ -6,15 +6,13 @@ import java.util.UUID;
 
 public interface ProductService
 {
-    void createProduct (Product product);
+    Product createProduct (Product product);
 
     void updateProduct (Product product);
 
-    void deleteProduct (Product product);
+    void deleteProduct (UUID id);
 
-    Product getProduct(int id);
+    Product getProduct(UUID id);
 
     Iterable<Product> getAllProducts();
-
-    Product getProductById(UUID id);
 }

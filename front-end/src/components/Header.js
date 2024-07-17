@@ -1,10 +1,9 @@
-// Header.js
 import React, { useEffect, useState } from 'react';
 import { useAuth } from "react-oidc-context";
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useCart } from './CartContext';
 import '../App.css';
-import '../Header.css';
+import '../styles/Header.css';
 
 function Header() {
     const auth = useAuth();
@@ -38,11 +37,16 @@ function Header() {
         window.location.href = '/cart';
     };
 
+    
+    const handleLogoClick = () => {
+        window.location.href = '/';
+    };
+
     return (
         <header className="header">
             <div className="header-content">
                 <div className="logo">
-                    <img src="/logo.png" alt="Logo" />
+                    <img src="/logo.png" alt="Logo" onClick={handleLogoClick} />
                 </div>
                 <nav className="navbar-category">
                     <a href="#" className="nav-link">OBERTEILE</a>

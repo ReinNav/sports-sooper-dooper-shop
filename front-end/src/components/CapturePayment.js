@@ -18,13 +18,13 @@ const CapturePayment = () => {
 
     const handlePaymentCompletion = async (token) => {
         try {
-            const paymentStatus = await completePayment(token);
-            if (paymentStatus === 'success') {
+            const response = await completePayment(token);
+            if (response.status === 'success') {
                 console.log('Payment completed successfully');
-                navigate('/success/{$orderid}');
+                navigate(`/success/${response.orderId}`);
             } else {
                 console.error('Payment failed');
-                navigate('/failure');
+                navigate(`/failure/${response.orderId}`);
             }
         } catch (error) {
             console.error('Payment completion failed:', error);

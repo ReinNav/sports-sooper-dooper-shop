@@ -1,10 +1,10 @@
 import React from 'react';
 
-import '../components/AboutUs.css';
+import '../styles/FooterPages.css';
 
 const AboutUs = () => {
   return (
-    <div className="page-content">
+    <div className="main-container page-content">
       <h1>Über uns</h1>
       <p>
         Willkommen beim Sport Super Dooper Store! Wir sind Ihr Spezialist für Sportbekleidung und 

@@ -1,9 +1,9 @@
 import React from 'react';
-import '../components/Contact.css';
+import '../styles/FooterPages.css';
 
 const Contact = () => {
   return (
-    <div className="page-content">
+    <div className="main-container page-content">
       <h1>Kontakt</h1>
       <p>
         Wir freuen uns, von Ihnen zu hören! Sie können uns über die folgenden Kontaktmöglichkeiten 

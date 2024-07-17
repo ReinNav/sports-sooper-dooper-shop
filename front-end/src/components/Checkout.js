@@ -3,7 +3,7 @@ import { useAuth } from 'react-oidc-context';
 import { createOrder } from './Api/OrderApi';
 import { useCart } from './CartContext';
 import { useNavigate } from 'react-router-dom';
-import '../Checkout.css';
+import '../styles/Checkout.css';
 import { createPayment, completePayment } from './Api/PaymentApi';
 
 const countries = [
@@ -108,7 +108,7 @@ const Checkout = () => {
 
         try {
             const createdOrder = await createOrder(order);
-            setOrderId(createdOrder.id);
+            setOrderId(createdOrder.orderId);
             console.log(createdOrder);
 
             const paymentData = await createPayment(createdOrder.totalAmount, createdOrder.userId, createdOrder.orderId);

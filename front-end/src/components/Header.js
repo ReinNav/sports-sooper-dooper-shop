@@ -1,10 +1,9 @@
-// Header.js
 import React, { useEffect, useState } from 'react';
 import { useAuth } from "react-oidc-context";
 import { ShoppingCartOutlined } from '@ant-design/icons';
 import { useCart } from './CartContext';
 import '../App.css';
-import '../Header.css';
+import '../styles/Header.css';
 
 function Header() {
     const auth = useAuth();

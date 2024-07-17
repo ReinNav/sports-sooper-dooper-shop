@@ -3,7 +3,7 @@ import { useAuth } from 'react-oidc-context';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import { getCart, addToCart, subtractFromCart, removeFromCart, clearCart } from './Api/CartApi';
 import { useCart } from './CartContext'; 
-import '../Cart.css';
+import '../styles/Cart.css';
 
 const Cart = () => {
     const auth = useAuth();

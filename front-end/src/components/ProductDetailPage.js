@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './ProductDetailPage.css';
+import '../styles/ProductDetailPage.css';
 import { Modal, Button } from 'antd';
 import ProductsApi from './Api/ProductsApi';
 import { addToCart } from './Api/CartApi';
@@ -91,7 +91,7 @@ const ProductDetailPage = () => {
     }
 
     return (
-        <div className="container">
+        <div className="main-container container">
             <div className='flex-column inner-container'>
                 <div className='flex-row first-row'>
                     <img className='product-detail-image' src={product.imageLink} alt={product.name} />

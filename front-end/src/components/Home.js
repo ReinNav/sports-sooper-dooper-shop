@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Typography } from 'antd';
 import ProductsApi from './Api/ProductsApi';
-import '../Home.css';
+import '../styles/Home.css';
 
 const { Title } = Typography;
 

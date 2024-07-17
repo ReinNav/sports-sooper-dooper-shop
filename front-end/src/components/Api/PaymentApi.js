@@ -13,5 +13,7 @@ export const completePayment = async (token) => {
     const response = await axios.post(`${PAYMENT_API_URL}/capture`, null, {
         params: { token }
     });
+    console.log(response);
+    console.log(response.data);
     return response.data;
 };

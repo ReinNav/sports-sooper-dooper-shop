@@ -10,12 +10,14 @@ import ProductDetailPage from './components/ProductDetailPage';
 import Checkout from './components/Checkout';
 import CapturePayment from './components/CapturePayment';
 import OrderConfirmation from "./components/OrderConfirmation";
+import OrderFail from "./components/OrderFail";
 
 const AppRoutes = () => (
     <BrowserRouter>
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/success/:orderid" element={<OrderConfirmation />} />
+            <Route path="/failure/:orderid" element={<OrderFail />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/terms" element={<TermsOfService />} />

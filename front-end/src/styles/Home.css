@@ -22,11 +22,11 @@
 }
 
 .hero-banner1 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../public/hero_one.png');;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../../public/hero_one.png');;
 }
 
 .hero-banner2 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../public/hero_two.png');;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../../public/hero_two.png');;
 }
 
 .hero-banner1:hover, .hero-banner2:hover {

@@ -24,7 +24,7 @@ const CapturePayment = () => {
                 navigate(`/success/${response.orderId}`);
             } else {
                 console.error('Payment failed');
-                navigate('/failure');
+                navigate(`/failure/${response.orderId}`);
             }
         } catch (error) {
             console.error('Payment completion failed:', error);

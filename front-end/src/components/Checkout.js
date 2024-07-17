@@ -3,7 +3,7 @@ import { useAuth } from 'react-oidc-context';
 import { createOrder } from './Api/OrderApi';
 import { useCart } from './CartContext';
 import { useNavigate } from 'react-router-dom';
-import '../Checkout.css';
+import '../styles/Checkout.css';
 import { createPayment, completePayment } from './Api/PaymentApi';
 
 const countries = [

@@ -1,10 +1,10 @@
 import React from 'react';
 
-import '../styles/PrivacyPolicy.css';
+import '../styles/FooterPages.css';
 
 const PrivacyPolicy = () => {
   return (
-    <div className="page-content">
+    <div className="main-container page-content">
       <h1>Datenschutzrichtlinie</h1>
       <p>
         Ihre Privatsphäre ist uns wichtig. Diese Datenschutzrichtlinie erläutert, welche persönlichen 

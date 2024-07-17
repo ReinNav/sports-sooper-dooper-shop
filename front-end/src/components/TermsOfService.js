@@ -1,9 +1,9 @@
 import React from 'react';
-import '../App.css';
+import '../styles/FooterPages.css';
 
 const TermsOfService = () => {
   return (
-    <div className="page-content">
+    <div className="main-container page-content">
       <h1>Nutzungsbedingungen</h1>
       <p>
         Willkommen auf unserer Website! Diese Nutzungsbedingungen regeln die Nutzung unserer Website 

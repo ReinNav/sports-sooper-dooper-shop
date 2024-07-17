@@ -19,6 +19,7 @@ const ProductListing = () => {
     const [sizes, setSizes] = useState([]);
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedPriceRange, setSelectedPriceRange] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     const query = useQuery();
     const navigate = useNavigate();
 
@@ -41,6 +42,11 @@ const ProductListing = () => {
                 if (categoryFromUrl) {
                     setSelectedCategory(categoryFromUrl);
                     navigate('/products', { replace: true });
+                }
+
+                const searchFromUrl = query.get('search');
+                if (searchFromUrl) {
+                    setSearchTerm(searchFromUrl);
                 }
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -77,28 +83,32 @@ const ProductListing = () => {
         let filtered = products;
 
         if (selectedCategory) {
-            filtered = filtered.filter(product => product.category === selectedCategory);
+            filtered = products.filter(product => product.category === selectedCategory);
         }
 
         if (selectedGender) {
-            filtered = filtered.filter(product => product.gender === selectedGender);
+            filtered = products.filter(product => product.gender === selectedGender);
         }
 
         if (selectedColor) {
-            filtered = filtered.filter(product => product.color === selectedColor);
+            filtered = products.filter(product => product.color === selectedColor);
         }
 
         if (selectedSize) {
-            filtered = filtered.filter(product => product.size === selectedSize);
+            filtered = products.filter(product => product.size === selectedSize);
         }
 
         if (selectedPriceRange) {
             const [min, max] = selectedPriceRange.split('-').map(Number);
-            filtered = filtered.filter(product => product.price >= min && product.price <= max);
+            filtered = products.filter(product => product.price >= min && product.price <= max);
+        }
+
+        if (searchTerm) {
+            filtered = filtered.filter(product => product.title.toLowerCase().includes(searchTerm.toLowerCase()));
         }
 
         setFilteredProducts(filtered);
-    }, [selectedCategory, selectedGender, selectedColor, selectedSize, selectedPriceRange, products, query]);
+    }, [selectedCategory, selectedGender, selectedColor, selectedSize, selectedPriceRange, products, query, searchTerm]);
 
     return (
         <div className="product-listing-container">

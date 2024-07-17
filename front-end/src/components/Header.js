@@ -31,7 +31,7 @@ function Header() {
     };
 
     const handleClickSearch = (category) => {
-
+        window.location.href = '/products?search=' + encodeURIComponent(searchText);
     };
 
     const handleCartClick = () => {

@@ -1,43 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import './MyAccount.css';
-import Keycloak from 'keycloak-js';
+import { useAuth } from 'react-oidc-context';
+
 
 const MyAccount = () => {
+    const auth = useAuth();
     const [user, setUser] = useState(null);
     const [orders, setOrders] = useState([]);
     const [addresses, setAddresses] = useState([]);
 
     useEffect(() => {
-        const keycloak = Keycloak('/keycloak.json');
-        keycloak.init({ onLoad: 'login-required' }).then(authenticated => {
-            if (authenticated) {
-                keycloak.loadUserInfo().then(userInfo => {
-                    setUser(userInfo);
-                    fetchData(userInfo);
-                });
-            }
-        });
-
-        const fetchData = async (userInfo) => {
-            try {
-                // Fetch orders
-                const ordersResponse = await fetch(`/api/orders?userId=${userInfo.sub}`);
-                const ordersData = await ordersResponse.json();
-                setOrders(ordersData);
-
-                // Fetch addresses
-                const addressesResponse = await fetch(`/api/addresses?userId=${userInfo.sub}`);
-                const addressesData = await addressesResponse.json();
-                setAddresses(addressesData);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-    }, []);
-
-    if (!user) {
-        return <div>Loading...</div>;
-    }
+        setUser(auth.user);
+        if (auth.isAuthenticated) {
+    
+        }
+    })
+        
 
     return (
         <div className="my-account">

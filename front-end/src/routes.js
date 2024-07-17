@@ -11,6 +11,7 @@ import ProductDetailPage from './components/ProductDetailPage';
 import Checkout from './components/Checkout';
 import CapturePayment from './components/CapturePayment';
 import OrderConfirmation from "./components/OrderConfirmation";
+import MyAccount from './components/MyAccount';
 import OrderFail from "./components/OrderFail";
 import NotFound from "./components/NotFound";
 
@@ -30,7 +31,8 @@ const AppRoutes = () => (
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/capture" element={<CapturePayment />} />
             <Route path="*" element={<NotFound />} />
-        </Routes>
+          <Route path="/myaccount" element={<MyAccount />} />
+    </Routes>
     </BrowserRouter>
 );
 

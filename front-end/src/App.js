@@ -8,7 +8,6 @@ import Footer from './components/Footer.js';
 function App() {
     return (
         <CartProvider>
-            <Header />
             <AppRoutes />
             <Footer />
         </CartProvider>

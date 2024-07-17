@@ -8,7 +8,8 @@ import '../styles/Header.css';
 function Header() {
     const auth = useAuth();
     const [user, setUser] = useState(null);
-    const { cartCount, fetchCart } = useCart(); 
+    const { cartCount, fetchCart } = useCart();
+    const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
         setUser(auth.user);
@@ -29,15 +30,13 @@ function Header() {
         });
     };
 
-    const handleClickSearch = () => {
-        console.log('Search button clicked');
+    const handleClickSearch = (category) => {
+        window.location.href = '/products?search=' + encodeURIComponent(searchText);
     };
 
     const handleCartClick = () => {
         window.location.href = '/cart';
     };
-
-    
     const handleLogoClick = () => {
         window.location.href = '/';
     };
@@ -45,19 +44,22 @@ function Header() {
     return (
         <header className="header">
             <div className="header-content">
-                <div className="logo">
-                    <img src="/logo.png" alt="Logo" onClick={handleLogoClick} />
+                <div className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
+                    <img src="/logo.png" alt="Logo" />
                 </div>
                 <nav className="navbar-category">
-                    <a href="#" className="nav-link">OBERTEILE</a>
-                    <a href="#" className="nav-link">HOSEN</a>
-                    <a href="#" className="nav-link">SCHUHE</a>
+                    <a href="/products?category=Oberteile" className="nav-link">OBERTEILE</a>
+                    <a href="/products?category=Hosen" className="nav-link">HOSEN</a>
+                    <a href="/products?category=Schuhe" className="nav-link">SCHUHE</a>
+                    <a href="/products" className="nav-link">MEHR</a>
                 </nav>
                 <div className='flex-row header-second-half'>
                     <div className="search-bar">
                         <input
                             type="text"
                             placeholder="Suche..."
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
                         />
                         <button className="search-button" onClick={handleClickSearch}>Suchen</button>
                     </div>

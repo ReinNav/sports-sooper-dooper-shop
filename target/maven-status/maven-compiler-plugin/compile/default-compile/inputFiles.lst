@@ -1,0 +1,14 @@
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\core\domain\service\interfaces\IProductRepository.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\port\config\RabbitMQConfig.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\port\user\controller\ProductController.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\port\user\advice\ProductNotFoundAdvice.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\core\domain\service\impl\ProductService.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\core\domain\service\interfaces\IProductService.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\port\shoppingcart\producer\UpdateProdcutProducer.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\port\user\exception\ProductNotFoundException.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\port\user\producer\ProductProducer.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\port\user\consumer\ProductConsumer.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\Application.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\port\admin\consumer\PriceChangeConsumer.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\core\domain\model\Product.java
+D:\users\felix\Documents\Uni\Semester 11\SoftwareArchitekturen\sport-super-dooper-store\src\main\java\com\example\demo\port\user\controller\TestController.java

@@ -21,7 +21,7 @@ const CapturePayment = () => {
             const paymentStatus = await completePayment(token);
             if (paymentStatus === 'success') {
                 console.log('Payment completed successfully');
-                navigate('/success');
+                navigate('/success/{$orderid}');
             } else {
                 console.error('Payment failed');
                 navigate('/failure');

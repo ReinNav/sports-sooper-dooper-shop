@@ -21,6 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class PaymentControllerTest {
@@ -61,12 +62,15 @@ class PaymentControllerTest {
     void completePayment_Success() throws Exception {
         Payment payment = new Payment();
         payment.setStatus("success");
+        payment.setOrderId(UUID.randomUUID());
         when(paymentService.completePayment(anyString())).thenReturn(payment);
 
         mockMvc.perform(post("/paypal/capture")
                         .param("token", "token")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("success"))
+                .andExpect(jsonPath("$.orderId").value(payment.getOrderId().toString()));
 
         verify(paymentService, times(1)).completePayment(anyString());
         verify(paymentProducer, times(1)).notifyPaymentCompleted(any(Payment.class));
@@ -76,12 +80,15 @@ class PaymentControllerTest {
     void completePayment_Failure() throws Exception {
         Payment payment = new Payment();
         payment.setStatus("failure");
+        payment.setOrderId(UUID.randomUUID());
         when(paymentService.completePayment(anyString())).thenReturn(payment);
 
         mockMvc.perform(post("/paypal/capture")
                         .param("token", "token")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("failure"))
+                .andExpect(jsonPath("$.orderId").value(payment.getOrderId().toString()));
 
         verify(paymentService, times(1)).completePayment(anyString());
         verify(paymentProducer, times(1)).notifyPaymentCompleted(any(Payment.class));

@@ -4,7 +4,7 @@
     align-items: center; /* Zentriert die Inhalte vertikal, falls nötig */
     width: 100%;
     box-sizing: border-box;
-    padding: 20px;
+    padding-top: 50px;
     background-color: #333;
     color: #fff;
   }
@@ -35,4 +35,14 @@
   
   .footer-nav a:hover {
     text-decoration: underline;
+  }
+
+  .footer-content {
+    width: 100%;
+  }
+
+  .copyright {
+    margin-top: 50px;
+    margin-bottom: 10px;
+    text-align: center;
   }

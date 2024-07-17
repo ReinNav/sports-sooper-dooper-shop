@@ -38,11 +38,16 @@ function Header() {
         window.location.href = '/cart';
     };
 
+    
+    const handleLogoClick = () => {
+        window.location.href = '/';
+    };
+
     return (
         <header className="header">
             <div className="header-content">
                 <div className="logo">
-                    <img src="/logo.png" alt="Logo" />
+                    <img src="/logo.png" alt="Logo" onClick={handleLogoClick} />
                 </div>
                 <nav className="navbar-category">
                     <a href="#" className="nav-link">OBERTEILE</a>

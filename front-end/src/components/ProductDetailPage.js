@@ -3,19 +3,20 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './ProductDetailPage.css';
 import { Modal, Button } from 'antd';
 import ProductsApi from './Api/ProductsApi';
-import { addToCart } from './Api/CartApi'; 
-import { useAuth } from 'react-oidc-context'; 
-import { useCart } from './CartContext'; 
+import { addToCart } from './Api/CartApi';
+import { useAuth } from 'react-oidc-context';
+import { useCart } from './CartContext';
 
 const ProductDetailPage = () => {
-    const { id } = useParams(); 
-    const auth = useAuth(); 
-    const { fetchCart } = useCart(); 
+    const { id } = useParams();
+    const auth = useAuth();
+    const { fetchCart } = useCart();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
     const [quantity, setQuantity] = useState(1);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
 
     const fetchProduct = async () => {
         try {
@@ -41,7 +42,7 @@ const ProductDetailPage = () => {
 
     const handleAddToCart = async () => {
         if (!auth.isAuthenticated) {
-            console.error('User is not authenticated');
+            setIsAuthModalVisible(true);
             return;
         }
 
@@ -57,11 +58,11 @@ const ProductDetailPage = () => {
         };
 
         try {
-            await addToCart(auth.user?.profile.sub, cartItem, quantity); 
+            await addToCart(auth.user?.profile.sub, cartItem, quantity);
             fetchCart(auth.user.profile.sub);
             setQuantity(1);
-            await fetchProduct(); // Refresh product data
-            setIsModalVisible(true); // Show modal after adding to cart
+            await fetchProduct();
+            setIsModalVisible(true);
         } catch (error) {
             console.error('Failed to add product to cart', error);
         }
@@ -73,6 +74,12 @@ const ProductDetailPage = () => {
 
     const handleContinueShopping = () => {
         setIsModalVisible(false);
+    };
+
+    const handleLogin = () => {
+        auth.signinRedirect({
+            redirect_uri: window.location.href 
+        });
     };
 
     if (loading) {
@@ -129,6 +136,21 @@ const ProductDetailPage = () => {
                 ]}
             >
                 <p>Das Produkt wurde erfolgreich zum Warenkorb hinzugefügt.</p>
+            </Modal>
+            <Modal
+                title="Anmeldung erforderlich"
+                open={isAuthModalVisible}
+                onCancel={() => setIsAuthModalVisible(false)}
+                footer={[
+                    <Button className='modal-primary-button' key="login" type="primary" onClick={handleLogin}>
+                        Zum Login
+                    </Button>,
+                    <Button key="cancel" onClick={() => setIsAuthModalVisible(false)}>
+                        Zurück
+                    </Button>
+                ]}
+            >
+                <p>Bitte melden Sie sich an, um Produkte in den Warenkorb zu legen.</p>
             </Modal>
         </div>
     );

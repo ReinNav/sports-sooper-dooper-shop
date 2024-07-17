@@ -21,12 +21,12 @@ function Home() {
         handleProducts();
     }, []);
 
-    const handleClickFootball = () => {
-        console.log('Football button clicked');
+    const handleClickFirstHero = () => {
+        console.log('first hero button clicked');
     };
 
-    const handleClickBasketball = () => {
-        console.log('Basketball button clicked');
+    const handleClickSecondHero = () => {
+        console.log('second hero button clicked');
     };
 
     return (
@@ -34,16 +34,16 @@ function Home() {
             <section className="hero-section">
                 <div className="hero-banner1">
                     <div className="hero-text">
-                        <h1>Football Equipment</h1>
-                        <p>Football Equipment & More</p>
-                        <button className="cta-button" onClick={handleClickFootball}>Jetzt Shoppen</button>
+                        <h1>Oberteile</h1>
+                        <p>Die besten Oberteile für deine Sport</p>
+                        <button className="cta-button" onClick={handleClickFirstHero}>Jetzt Shoppen</button>
                     </div>
                 </div>
                 <div className="hero-banner2">
                     <div className="hero-text">
-                        <h1>Basketball Equipment</h1>
-                        <p>Basketball Equipment & More</p>
-                        <button className="cta-button" onClick={handleClickBasketball}>Jetzt Shoppen</button>
+                        <h1>Schuhe</h1>
+                        <p>Zuverlässige und hochwertige Sportschuhe</p>
+                        <button className="cta-button" onClick={handleClickSecondHero}>Jetzt Shoppen</button>
                     </div>
                 </div>
             </section>
@@ -53,7 +53,7 @@ function Home() {
                     {products.length > 0 ? (
                         <div className="product-list">
                             {products.map((product, index) => (
-                                <Link to={`/productdetail/${product.id}`} className="product-item" key={index}>
+                                <Link to={`/product/${product.id}`} className="product-item" key={index}>
                                     <img src={product.imageLink} alt={product.name} className="product-image"/>
                                     <div className='flex-column product-detail-wrapper'>
                                     <h3>{product.name}</h3>
@@ -67,9 +67,6 @@ function Home() {
                     )}
                 </div>
             </section>
-            <footer className="footer-section">
-                <p>&copy; 2024 Sport Super Dooper Store. Alle Rechte vorbehalten.</p>
-            </footer>
         </div>
     );
 }

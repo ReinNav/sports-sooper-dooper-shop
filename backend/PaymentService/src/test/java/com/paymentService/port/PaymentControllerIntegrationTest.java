@@ -35,6 +35,7 @@ import static java.time.temporal.ChronoUnit.SECONDS;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Testcontainers
@@ -113,13 +114,15 @@ public class PaymentControllerIntegrationTest {
         payment.setDate(new Date());
         payment.setAmount(BigDecimal.valueOf(100.00));
         payment.setUserId(UUID.randomUUID());
-        payment.setStatus("Pending");
+        payment.setStatus("success");
         payment.setOrderId(UUID.randomUUID());
         paymentRepository.save(payment);
 
         mockMvc.perform(post("/paypal/capture")
                         .param("token", "paypalId")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("success"))
+                .andExpect(jsonPath("$.orderId").value(payment.getOrderId().toString()));
     }
 }

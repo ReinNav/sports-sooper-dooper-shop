@@ -108,7 +108,7 @@ const Checkout = () => {
 
         try {
             const createdOrder = await createOrder(order);
-            setOrderId(createdOrder.id);
+            setOrderId(createdOrder.orderId);
             console.log(createdOrder);
 
             const paymentData = await createPayment(createdOrder.totalAmount, createdOrder.userId, createdOrder.orderId);

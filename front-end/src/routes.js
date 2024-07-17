@@ -21,7 +21,7 @@ const AppRoutes = () => (
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/productdetail/:id" element={<ProductDetailPage />} />
+            <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/capture" element={<CapturePayment />} />
         </Routes>

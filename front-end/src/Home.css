@@ -10,20 +10,27 @@
     margin: 20px;
 }
 
-.hero-banner1 {
-    background: url('football.jpg') no-repeat center center/cover;
-    color: white;
+.hero-banner1, .hero-banner2 {
+    background-color: #000000;
     padding: 180px 20px;
     flex: 1;
     position: relative;
+    background-position: center;
+	background-size: cover;
+    color: white;
+    transition: all 0.3s;
+}
+
+.hero-banner1 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../public/hero_one.png');;
 }
 
 .hero-banner2 {
-    background: url('basketball.jpg') no-repeat center bottom/cover;
-    color: white;
-    padding: 180px 20px;
-    flex: 1;
-    position: relative;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../public/hero_two.png');;
+}
+
+.hero-banner1:hover, .hero-banner2:hover {
+    opacity: 0.8;
 }
 
 .hero-text {
@@ -43,10 +50,6 @@
     font-size: 1em;
     border-radius: 5px;
     transition: all 0.3s;
-}
-
-.cta-button:hover {
-    opacity: 0.8;
 }
 
 .products-section {

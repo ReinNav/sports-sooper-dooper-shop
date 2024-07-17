@@ -196,8 +196,18 @@ h2.product-name {
     opacity: 0.8;
 }
 
+
+.checkout-button:disabled {
+    background-color: #979797;
+    cursor: not-allowed;
+}
+
 .total {
     font-size: 20px;
     margin-top: 20px;
     font-weight: 700;
+}
+
+.empty-cart {
+    margin-top: 150px;
 }

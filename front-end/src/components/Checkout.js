@@ -108,6 +108,7 @@ const Checkout = () => {
 
         try {
             const createdOrder = await createOrder(order);
+            setOrderId(createdOrder.id);
             console.log(createdOrder);
 
             const paymentData = await createPayment(createdOrder.totalAmount, createdOrder.userId, createdOrder.orderId);
@@ -116,6 +117,8 @@ const Checkout = () => {
             setStep(step + 1);
             setOrderId(createdOrder.orderId);
             setPaymentRedirectUrl(paymentData.redirectUrl);
+
+
         } catch (error) {
             console.error('Order or payment creation failed:', error);
             setErrorMessage('Fehler bei der Erstellung der Bestellung oder Zahlung.');

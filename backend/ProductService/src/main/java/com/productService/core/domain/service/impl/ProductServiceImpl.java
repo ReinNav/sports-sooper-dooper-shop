@@ -18,13 +18,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public void createProduct (Product product) {
-
         productRepository.save(product);
     }
 
     @Override
     public void updateProduct(Product product) {
-
         productRepository.save(product);
     }
 
@@ -36,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProduct(int id) {
-
+ // verzeichnis des services
         return null;
     }
 

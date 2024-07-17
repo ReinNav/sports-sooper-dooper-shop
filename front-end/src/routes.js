@@ -11,13 +11,14 @@ import Contact from './components/Contact';
 import ProductDetailPage from './components/ProductDetailPage';
 import Checkout from './components/Checkout';
 import CapturePayment from './components/CapturePayment';
+import OrderConfirmation from "./components/OrderConfirmation";
 
 const AppRoutes = () => (
     
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/success" element={<Home />} />
+      <Route path="/success/:orderid" element={<OrderConfirmation />} />
       <Route path="/secured" element={<PrivateRoute><SecuredPage /></PrivateRoute>} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/about" element={<AboutUs/>} />
@@ -29,7 +30,6 @@ const AppRoutes = () => (
       <Route path="/capture" element={<CapturePayment />} />
     </Routes>
     </BrowserRouter>
-
 );
 
 export default AppRoutes;

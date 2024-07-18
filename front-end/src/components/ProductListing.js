@@ -74,7 +74,7 @@ const ProductListing = () => {
         }
     
         if (selectedColor) {
-            filtered = filtered.filter(product => product.color === selectedColor);
+            filtered = filtered.filter(product => product.colour === selectedColor);
         }
     
         if (selectedSize) {

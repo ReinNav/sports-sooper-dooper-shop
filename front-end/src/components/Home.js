@@ -58,6 +58,8 @@ function Home() {
                                     <img src={product.imageLink} alt={product.name} className="product-image"/>
                                     <div className='flex-column product-detail-wrapper'>
                                     <h3>{product.name}</h3>
+                                    {product.amount === 0 && <p style={{ color: 'red' }}>Leider nicht auf Lager</p>}
+                                    {product.amount <= 5 && product.amount > 0 && <p style={{ color: 'red' }}>Fast ausverkauft!</p>}
                                     <p id='price'>{product.price.toFixed(2).replace('.', ',')} €</p>
                                     </div>
                                 </Link>

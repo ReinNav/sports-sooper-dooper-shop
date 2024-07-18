@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from "react-oidc-context";
-import { ShoppingCartOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { useCart } from './CartContext';
 import '../App.css';
 import '../styles/Header.css';
@@ -43,6 +43,10 @@ function Header() {
         window.location.href = '/';
     };
 
+    const handleAccountClick = () => {
+        window.location.href = '/myaccount';
+    };
+
     return (
         <header className="header">
             <div className="header-content">
@@ -65,6 +69,7 @@ function Header() {
                         />
                         <button className="search-button" onClick={handleClickSearch}>Suchen</button>
                     </div>
+                    <UserOutlined className='account-icon' onClick={handleAccountClick} style={{ }} />
                     <div className="cart-icon-container">
                         {cartCount > 0 && <span className='badge badge-warning' id='lblCartCount'>{cartCount}</span>}
                         <ShoppingCartOutlined className='cart-icon' onClick={handleCartClick} />

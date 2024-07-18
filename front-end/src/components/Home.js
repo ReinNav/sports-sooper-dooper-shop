@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Typography } from 'antd';
 import ProductsApi from './Api/ProductsApi';
 import '../styles/Home.css';
@@ -8,6 +8,7 @@ const { Title } = Typography;
 
 function Home() {
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleProducts = async () => {
@@ -22,11 +23,11 @@ function Home() {
     }, []);
 
     const handleClickFirstHero = () => {
-        console.log('first hero button clicked');
+        navigate('/products?category=OBERTEILE');
     };
 
     const handleClickSecondHero = () => {
-        console.log('second hero button clicked');
+        navigate('/products?category=SCHUHE');
     };
 
     return (
@@ -51,7 +52,7 @@ function Home() {
                 <div style={{padding: '20px'}}>
                     <Title id='list-title' level={1}>Unsere Produkte</Title>
                     {products.length > 0 ? (
-                        <div className="product-grid">
+                        <div className="product-list">
                             {products.map((product, index) => (
                                 <Link to={`/product/${product.id}`} className="product-item" key={index}>
                                     <img src={product.imageLink} alt={product.name} className="product-image"/>

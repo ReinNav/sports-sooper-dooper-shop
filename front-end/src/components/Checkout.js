@@ -29,6 +29,11 @@ const Checkout = () => {
         const { value } = e.target;
         setPhone(value);
     };
+
+    const validatePhoneNumber = (phoneNumber) => {
+        const phoneRegex = /^[+]?[0-9\s\-()]{7,15}$/;
+        return phoneRegex.test(phoneNumber);
+    };
     
 
     const validateStep = () => {
@@ -58,7 +63,7 @@ const Checkout = () => {
             case 3:
                 return (
                     auth.user?.profile.email &&
-                    phone
+                    validatePhoneNumber(phone)
                 );
             default:
                 return true;
@@ -69,6 +74,8 @@ const Checkout = () => {
         if (validateStep()) {
             setStep(step + 1);
             setErrorMessage('');
+        } else if (step === 3 && !validatePhoneNumber(phone)) {
+            setErrorMessage('Bitte geben Sie eine gültige Telefonnummer ein.');
         } else {
             setErrorMessage('Bitte füllen Sie alle erforderlichen Felder aus.');
         }
@@ -133,7 +140,7 @@ const Checkout = () => {
         switch (step) {
             case 1:
                 return (
-                    <div className='form-wrapper'>
+                    <div className='main-container form-wrapper'>
                         <h2>Versandadresse</h2>
                         <form>
                             <div className='flex-row double-input-row-wrapper'>
@@ -194,7 +201,7 @@ const Checkout = () => {
                 );
             case 2:
                 return (
-                    <div className='form-wrapper'>
+                    <div className='main-container form-wrapper'>
                         <h2>Rechnungsadresse</h2>
                         <form>
                             {!useShippingAsBilling && (
@@ -259,7 +266,7 @@ const Checkout = () => {
                 );
             case 3:
                 return (
-                    <div className='form-wrapper'>
+                    <div className='main-container form-wrapper'>
                         <h2>Kontaktdaten</h2>
                         <form>
                             <div className='flex-column with-label-wrapper'>
@@ -279,25 +286,9 @@ const Checkout = () => {
                 );
             case 4:
                 return (
-                    <div className='form-wrapper'>
+                    <div className='main-container form-wrapper'>
                         <h2>Bestellübersicht</h2>
                         <div className='order-summary'>
-                            <h3>Produkte</h3>
-                            {cart.cartItems.map(item => (
-                                <div key={item.productId} className='flex-row product-and-price'>
-                                    <p>{item.name}</p>
-                                    <p>{item.quantity} x {item.price.toFixed(2).replace('.', ',')} €</p>
-                                </div>
-                            ))}
-                            <hr></hr>
-                            <div className='flex-row product-and-price total-price'>
-                                <p>Lieferung</p>
-                                <p>{shipmentType === "EXPRESS" ? 7.99 : 4.99}</p>
-                            </div>
-                            <div className='flex-row product-and-price total-price'>
-                                <p>Bestellsumme</p>
-                                <p id="price">{(cart.totalPrice + (shipmentType === "EXPRESS" ? 7.99 : 4.99)).toFixed(2).replace('.', ',')} €</p>
-                            </div>
                             <h3>Versandadresse</h3>
                             <p>{`${shippingAddress.firstName} ${shippingAddress.lastName}`}</p>
                             <p>{`${shippingAddress.street} ${shippingAddress.houseNumber}`}</p>
@@ -321,6 +312,23 @@ const Checkout = () => {
                             <h3>Kontaktdaten</h3>
                             <p>{auth.user?.profile.email}</p>
                             <p>{phone}</p>
+
+                            <h3>Produkte</h3>
+                            {cart.cartItems.map(item => (
+                                <div key={item.productId} className='flex-row product-and-price'>
+                                    <p>{item.name}</p>
+                                    <p>{item.quantity} x {item.price.toFixed(2).replace('.', ',')} €</p>
+                                </div>
+                            ))}
+                            <hr></hr>
+                            <div className='flex-row product-and-price total-price'>
+                                <p>Lieferung</p>
+                                <p>{shipmentType === "EXPRESS" ? 7.99 : 4.99}</p>
+                            </div>
+                            <div className='flex-row product-and-price total-price'>
+                                <p>Bestellsumme</p>
+                                <p id="price">{(cart.totalPrice + (shipmentType === "EXPRESS" ? 7.99 : 4.99)).toFixed(2).replace('.', ',')} €</p>
+                            </div>
                         </div>
                         <div className='step-navigation'>
                             <button type="button" onClick={handlePlaceOrder}>Bestellung aufgeben und mit Paypal bezahlen</button>
@@ -330,8 +338,9 @@ const Checkout = () => {
                 );
             case 5:
                 return (
-                    <div className='form-wrapper'>
-                        <h2>PayPal Zahlung</h2>
+                    <div className='main-container form-wrapper'>
+                        <h1>PayPal Zahlung</h1>
+                        <img src='/paypal.png' alt='PayPal Logo' />
                         <div className='paypal-buttons'>
                             {paymentRedirectUrl ? (
                                 <a href={paymentRedirectUrl}>

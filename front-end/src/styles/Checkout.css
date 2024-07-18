@@ -78,6 +78,11 @@
     height: 20px;
 }
 
+.order-summary {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
 /* Order Summary */
 .checkout .order-summary {
     border: 1px solid #ddd;

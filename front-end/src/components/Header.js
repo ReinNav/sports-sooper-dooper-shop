@@ -48,9 +48,9 @@ function Header() {
                     <img src="/logo.png" alt="Logo" />
                 </div>
                 <nav className="navbar-category">
-                    <a href="/products?category=Oberteile" className="nav-link">OBERTEILE</a>
-                    <a href="/products?category=Hosen" className="nav-link">HOSEN</a>
-                    <a href="/products?category=Schuhe" className="nav-link">SCHUHE</a>
+                    <a href="/products?category=OBERTEILE" className="nav-link">OBERTEILE</a>
+                    <a href="/products?category=HOSEN" className="nav-link">HOSEN</a>
+                    <a href="/products?category=SCHUHE" className="nav-link">SCHUHE</a>
                     <a href="/products" className="nav-link">MEHR</a>
                 </nav>
                 <div className='flex-row header-second-half'>

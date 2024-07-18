@@ -49,7 +49,7 @@ function Home() {
                 </div>
             </section>
             <section className="products-section">
-                <div style={{padding: '20px'}}>
+                <div style={{padding: '50px'}}>
                     <Title id='list-title' level={1}>Unsere Produkte</Title>
                     {products.length > 0 ? (
                         <div className="product-list">

@@ -24,14 +24,12 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
-                /*
                 .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                        .requestMatchers("/api/secured/**", "api/user/**").hasRole("SSDS-USER")
+                        .requestMatchers("/product/admin/**").hasRole("SSDS-ADMIN")
                         .anyRequest().permitAll())
                 .oauth2ResourceServer(oauth2ResourceServer -> oauth2ResourceServer.jwt(
                         jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationTokenConverter)))
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                */
                 .cors().configurationSource(request -> {
 
                     final CorsConfiguration cors = new CorsConfiguration();

@@ -9,7 +9,7 @@ import { AuthProvider } from "react-oidc-context";
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const oidcConfig = {
-  authority: "http://localhost:8080/realms/ssds",
+  authority: "http://keycloak:8080/realms/ssds",
   client_id: "ssds-client",
   redirect_uri: "http://localhost:3000",
   onSigninCallback: () => {

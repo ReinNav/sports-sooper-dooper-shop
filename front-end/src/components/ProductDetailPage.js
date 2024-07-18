@@ -58,7 +58,7 @@ const ProductDetailPage = () => {
         };
 
         try {
-            await addToCart(auth.user?.profile.sub, cartItem, quantity);
+            await addToCart(auth.user?.profile.sub, cartItem, quantity, auth.user?.access_token);
             fetchCart(auth.user.profile.sub);
             setQuantity(1);
             await fetchProduct();
@@ -107,6 +107,7 @@ const ProductDetailPage = () => {
                         </div>
                         <div className='flex-column product-detail-buttons'>
                             {product.amount === 0 && <p style={{ color: 'red' }}>Leider nicht auf Lager</p>}
+                            {product.amount <= 5 && product.amount > 0 && <p style={{ color: 'red' }}>Fast ausverkauft!</p>}
                             <div className='flex-row product-detail-plus-minus-container'>
                                 <button onClick={() => handleQuantityChange(-1)} disabled={quantity === 1}>-</button>
                                 <div className="quantity-display">{quantity}</div>

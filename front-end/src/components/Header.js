@@ -14,6 +14,8 @@ function Header() {
     useEffect(() => {
         setUser(auth.user);
         if (auth.isAuthenticated) {
+            console.log(auth.user?.access_token);
+            console.log(auth)
             fetchCart(auth.user.profile.sub);
         }
     }, [auth.user, auth.isAuthenticated, fetchCart]);

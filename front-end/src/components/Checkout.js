@@ -110,27 +110,27 @@ const Checkout = () => {
             status: 'PENDING',
             shipmentType: shipmentType
         };
-
+    
         console.log(order);
-
+    
         try {
-            const createdOrder = await createOrder(order);
+            const accessToken = auth.user?.access_token;
+            const createdOrder = await createOrder(order, accessToken);
             setOrderId(createdOrder.orderId);
             console.log(createdOrder);
-
-            const paymentData = await createPayment(createdOrder.totalAmount, createdOrder.userId, createdOrder.orderId);
+    
+            const paymentData = await createPayment(createdOrder.totalAmount, createdOrder.userId, createdOrder.orderId, accessToken);
             console.log(paymentData);
-
+    
             setStep(step + 1);
             setOrderId(createdOrder.orderId);
             setPaymentRedirectUrl(paymentData.redirectUrl);
-
-
+    
         } catch (error) {
             console.error('Order or payment creation failed:', error);
             setErrorMessage('Fehler bei der Erstellung der Bestellung oder Zahlung.');
         }
-    };
+    };   
     const handleChange = (e, setState) => {
         const { name, value } = e.target;
         setState(prevState => ({ ...prevState, [name]: value }));

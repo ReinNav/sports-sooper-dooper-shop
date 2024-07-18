@@ -85,7 +85,7 @@ class ProductControllerIntegrationTest {
         Product product = new Product();
         product.setName("Test Product");
 
-        mockMvc.perform(post("/product")
+        mockMvc.perform(post("/product/admin")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(product)))
                 .andExpect(status().isCreated());

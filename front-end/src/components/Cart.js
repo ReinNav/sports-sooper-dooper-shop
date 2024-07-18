@@ -16,7 +16,8 @@ const Cart = () => {
         if (auth.isAuthenticated) {
             try {
                 const userId = auth.user.profile.sub;
-                const cartData = await getCart(userId);
+                const token = auth.user.access_token;
+                const cartData = await getCart(userId, token);
                 setCart(cartData);
                 fetchProductQuantities(cartData.cartItems);
             } catch (error) {
@@ -45,7 +46,6 @@ const Cart = () => {
         setProductQuantities(quantities);
     };
 
-
     useEffect(() => {
         fetchCart();
     }, [auth.isAuthenticated, fetchCart]);
@@ -53,7 +53,8 @@ const Cart = () => {
     const handleAdd = async (cartItem) => {
         try {
             const userId = auth.user.profile.sub;
-            await addToCart(userId, cartItem, 1);
+            const token = auth.user.access_token;
+            await addToCart(userId, cartItem, 1, token);
             updateCart(userId);
             fetchProductQuantities(cart.cartItems);
         } catch (error) {
@@ -64,7 +65,8 @@ const Cart = () => {
     const handleSubtract = async (cartItem) => {
         try {
             const userId = auth.user.profile.sub;
-            await subtractFromCart(userId, cartItem, 1);
+            const token = auth.user.access_token;
+            await subtractFromCart(userId, cartItem, 1, token);
             updateCart(userId); 
             fetchProductQuantities(cart.cartItems);
         } catch (error) {
@@ -75,7 +77,8 @@ const Cart = () => {
     const handleRemove = async (productId) => {
         try {
             const userId = auth.user.profile.sub;
-            await removeFromCart(userId, productId);
+            const token = auth.user.access_token;
+            await removeFromCart(userId, productId, token);
             updateCart(userId);
         } catch (error) {
             console.error('Fehler beim Entfernen aus dem Warenkorb', error);
@@ -85,7 +88,8 @@ const Cart = () => {
     const handleClear = async () => {
         try {
             const userId = auth.user.profile.sub;
-            await clearCart(userId);
+            const token = auth.user.access_token;
+            await clearCart(userId, token);
             updateCart(userId);
         } catch (error) {
             console.error('Fehler beim Leeren des Warenkorbs', error);

@@ -37,7 +37,7 @@
 <body>
 <div class="content">
     <h2>Bestellbestätigung</h2>
-    <p>Sehr geehrte/r <span th:text="${order.contactDetails.contactEmail}"></span>,</p>
+    <p>Sehr geehrte/r Herr/Frau <span th:text="${order.shippingAddress.lastName}"></span>,</p>
     <p>Vielen Dank für Ihre Bestellung. Hier sind die Details:</p>
     <table class="order-summary">
         <tr>

@@ -5,7 +5,6 @@ import { completePayment } from './Api/PaymentApi';
 const CapturePayment = () => {
     const navigate = useNavigate();
     const location = useLocation();
-
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
         const token = queryParams.get('token');
@@ -33,8 +32,8 @@ const CapturePayment = () => {
     };
 
     return (
-        <div>
-            <p>Processing payment...</p>
+        <div className='main-container '>
+            <h1 className='text-sm-center'>Zahlungsabwicklung...</h1>
         </div>
     );
 };

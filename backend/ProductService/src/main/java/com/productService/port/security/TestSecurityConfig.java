@@ -15,7 +15,7 @@ public class TestSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .formLogin().permitAll()
                 .and()

@@ -2,9 +2,12 @@ import axios from 'axios';
 
 const PAYMENT_API_URL = 'http://localhost:1236/paypal';
 
-export const createPayment = async (sum, userId, orderId) => {
+export const createPayment = async (sum, userId, orderId, token) => {
     const response = await axios.post(`${PAYMENT_API_URL}/init`, null, {
-        params: { sum, userId, orderId }
+        params: { sum, userId, orderId },
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
     });
     return response.data;
 };

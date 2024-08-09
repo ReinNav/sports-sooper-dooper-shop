@@ -5,7 +5,7 @@ const createOrder = async (order, token) => {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,  
+            'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(order),
     });
@@ -17,4 +17,34 @@ const createOrder = async (order, token) => {
     return response.json();
 };
 
-export { createOrder };
+const getOrdersByUserId = async (userId, token) => {
+    const response = await fetch(`${BASE_URL}?userId=${userId}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('Fehler beim Abrufen der Bestellungen');
+    }
+
+    return response.json();
+};
+
+const getOrderById = async (orderId, token) => {
+    const response = await fetch(`${BASE_URL}/${orderId}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('Fehler beim Abrufen der Bestellung');
+    }
+
+    return response.json();
+};
+
+export { createOrder, getOrdersByUserId, getOrderById };
